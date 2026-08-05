@@ -84,7 +84,7 @@ $token = csrf_token();
   <div class="container">
     <div class="about-grid">
       <div class="about-img">
-        <img src="images/floor1/IMG_7846.jpg" alt="Quattro Homes apartment interior" loading="lazy">
+        <img src="images/floor2/IMG_7846.jpg" alt="Quattro Homes apartment interior" loading="lazy">
       </div>
       <div class="about-copy">
         <p class="eyebrow" data-en="About Us" data-sw="Kuhusu Sisi">About Us</p>
@@ -472,7 +472,7 @@ $token = csrf_token();
 
 <footer>
   <div class="container footer-inner">
-    <span data-en="&copy; <?php echo date('Y'); ?> Quattro Homes.Feel at home. Stay in comfort. Return with a smile." data-sw="&copy; <?php echo date('Y'); ?> Quattro Homes &mdash; Jihisi nyumbani. Kaa vizuri. Rudi na tabasamu.">&copy; <?php echo date('Y'); ?> Quattro Homes &mdash; Feel at home. Stay in comfort. Return with a smile.</span>
+    <span data-en="&copy; <?php echo date('Y'); ?> Quattro Homes.Feel at home. Stay in comfort. Return with a smile." data-sw="&copy; <?php echo date('Y'); ?> Quattro Homes &mdash; Jihisi nyumbani. Kaa vizuri. Rudi na tabasamu.">&copy; <?php echo date('Y'); ?> Quattro Homes.Feel at home. Stay in comfort. Return with a smile.</span>
     <span class="socials">
       <a href="#">Facebook</a>
       <a href="#">Instagram</a>
