@@ -33,7 +33,7 @@ $token = csrf_token();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quattro Homes | Exclusive Stays, Exceptional Comfort — Bungoma, Kenya</title>
+<title>Quattro Homes | Exclusive Stays, Exceptional Comfort . Bungoma, Kenya</title>
 <meta name="description" content="Quattro Homes offers fully-equipped, secure 2-bedroom apartments in Bungoma, Kenya. Book your stay for family time, business trips, staycations, medical or academic visits.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@ $token = csrf_token();
   <div class="hero-content">
     <p class="eyebrow" data-en="More Than Enough" data-sw="Zaidi Ya Vya Kutosha">More Than Enough</p>
     <h1 data-en-html="A place that feels<br><em>like home.</em>" data-sw-html="Mahali panapohisi<br><em>kama nyumbani.</em>">A place that feels<br><em>like home.</em></h1>
-    <p class="lede" data-en="Rest, recharge and rejoice in a spacious, secure 2-bedroom apartment in Bungoma. every detail taken care of, every time." data-sw="Pumzika, jijaze nguvu na furahia nyumba ya vyumba viwili, salama na nafasi Bungoma — kila undani umeshughulikiwa, kila mara.">Rest, recharge and rejoice in a spacious, secure 2-bedroom apartment in Bungoma — every detail taken care of, every time.</p>
+    <p class="lede" data-en="Rest, recharge and rejoice in a spacious, secure 2-bedroom apartment in Bungoma. every detail taken care of, every time." data-sw="Pumzika, jijaze nguvu na furahia nyumba ya vyumba viwili, salama na nafasi Bungoma . kila undani umeshughulikiwa, kila mara.">Rest, recharge and rejoice in a spacious, secure 2-bedroom apartment in Bungoma every detail taken care of, every time.</p>
     <div class="hero-actions">
       <a href="#book" class="btn btn-primary" data-en="Check Availability" data-sw="Angalia Nafasi">Check Availability</a>
       <a href="https://wa.me/<?php echo $whatsapp_number; ?>" target="_blank" class="btn btn-outline" data-en="Chat on WhatsApp" data-sw="Ongea WhatsApp">Chat on WhatsApp</a>
@@ -84,12 +84,12 @@ $token = csrf_token();
   <div class="container">
     <div class="about-grid">
       <div class="about-img">
-        <img src="images/floor1/IMG_7797.jpg" alt="Quattro Homes apartment interior" loading="lazy">
+        <img src="images/floor1/IMG_7846.jpg" alt="Quattro Homes apartment interior" loading="lazy">
       </div>
       <div class="about-copy">
         <p class="eyebrow" data-en="About Us" data-sw="Kuhusu Sisi">About Us</p>
         <h2 data-en="Quattro Homes" data-sw="Quattro Homes">Quattro Homes</h2>
-        <p data-en="Quattro Homes offers exclusive, fully-furnished 2-bedroom apartments in Bungoma, designed for guests who want more than just a place to sleep. Every stay comes with fast WiFi, a fully equipped kitchen, secure parking and a private, peaceful environment — whether you're here for a weekend, a work trip, or a longer stay." data-sw="Quattro Homes hutoa nyumba za kipekee, zenye samani kamili za vyumba viwili Bungoma, zilizoundwa kwa wageni wanaotaka zaidi ya mahali pa kulala tu. Kila ukaaji unakuja na WiFi ya haraka, jiko lililokamilika, maegesho salama na mazingira ya faragha na amani — iwe uko hapa kwa wikendi, safari ya kazi, au ukaaji mrefu.">
+        <p data-en="Quattro Homes offers exclusive, fully-furnished 2-bedroom apartments in Bungoma, designed for guests who want more than just a place to sleep. Every stay comes with fast WiFi, a fully equipped kitchen, secure parking and a private, peaceful environment . whether you're here for a weekend, a work trip, or a longer stay." data-sw="Quattro Homes hutoa nyumba za kipekee, zenye samani kamili za vyumba viwili Bungoma, zilizoundwa kwa wageni wanaotaka zaidi ya mahali pa kulala tu. Kila ukaaji unakuja na WiFi ya haraka, jiko lililokamilika, maegesho salama na mazingira ya faragha na amani . iwe uko hapa kwa wikendi, safari ya kazi, au ukaaji mrefu.">
           Quattro Homes offers exclusive, fully-furnished 2-bedroom apartments in Bungoma, designed for guests
           who want more than just a place to sleep. Every stay comes with fast WiFi, a fully equipped kitchen,
           secure parking and a private, peaceful environment  whether you're here for a weekend, a work trip,
@@ -110,7 +110,7 @@ $token = csrf_token();
     <div class="section-head">
       <p class="eyebrow" data-en="Gallery" data-sw="Picha">Gallery</p>
       <h2 data-en="A look inside" data-sw="Angalia Ndani">A look inside</h2>
-      <p data-en="Two fully-furnished floors. take a look at both before you book." data-sw="Ghorofa mbili zenye samani kamili — angalia zote mbili kabla ya kuweka nafasi.">Two fully-furnished floors — take a look at both before you book.</p>
+      <p data-en="Two fully-furnished floors. take a look at both before you book." data-sw="Ghorofa mbili zenye samani kamili . angalia zote mbili kabla ya kuweka nafasi.">Two fully-furnished floors . take a look at both before you book.</p>
     </div>
 
     <div class="gallery-tabs">
@@ -208,17 +208,7 @@ $token = csrf_token();
   </div>
 </section>
 
-<!-- <section id="referral">
-  <div class="container">
-    <div class="referral-card">
-      <div class="referral-icon"><i class="fa-solid fa-gift"></i></div>
-      <div>
-        <h3 data-en="Refer a friend, you both save" data-sw="Alika rafiki, nyote mnaokoa">Refer a friend, you both save</h3>
-        <p data-en="After your stay, we'll send you a personal referral link. Share it — when a friend books through it, <?php echo (float)$settings['referral_discount_percent']; ?>% off is applied automatically for them, and once their stay is complete, you'll get a <?php echo (float)$settings['referral_reward_percent']; ?>% discount code for your next one." data-sw="Baada ya ukaaji wako, tutakutumia kiungo chako binafsi cha rufaa. Kishiriki — rafiki yako anapobook kupitia hicho, punguzo la <?php echo (float)$settings['referral_discount_percent']; ?>% linatumika kiotomatiki, na baada ya ukaaji wao kukamilika, utapata punguzo la <?php echo (float)$settings['referral_reward_percent']; ?>% kwa ukaaji wako ujao.">After your stay, we'll send you a personal referral link. Share it — when a friend books through it, <?php echo (float)$settings['referral_discount_percent']; ?>% off is applied automatically for them, and once their stay is complete, you'll get a <?php echo (float)$settings['referral_reward_percent']; ?>% discount code for your next one.</p>
-      </div>
-    </div>
-  </div>
-</section> -->
+
 
 <section id="testimonials">
   <div class="container">
@@ -238,12 +228,12 @@ $token = csrf_token();
           <?php if ($r['comment']): ?>
             <p>&ldquo;<?php echo htmlspecialchars($r['comment']); ?>&rdquo;</p>
           <?php endif; ?>
-          <span class="testimonial-name">— <?php echo htmlspecialchars($r['full_name']); ?></span>
+          <span class="testimonial-name">. <?php echo htmlspecialchars($r['full_name']); ?></span>
         </div>
       <?php endforeach; ?>
     </div>
     <?php else: ?>
-      <p style="text-align:center;color:#888;" data-en="No reviews yet, be the first to share your stay!" data-sw="Hakuna maoni bado — kuwa wa kwanza kushiriki ukaaji wako!">No reviews yet — be the first to share your stay!</p>
+      <p style="text-align:center;color:#888;" data-en="No reviews yet, be the first to share your stay!" data-sw="Hakuna maoni bado . kuwa wa kwanza kushiriki ukaaji wako!">No reviews yet . be the first to share your stay!</p>
     <?php endif; ?>
 
     <div class="review-form-wrap">
@@ -367,7 +357,7 @@ $token = csrf_token();
           </div>
           <div id="referral-applied-note" style="display:none;" class="referral-applied-note">
             <i class="fa-solid fa-circle-check"></i>
-            <span data-en="Referral code applied — your discount will show in the total below." data-sw="Msimbo wa rufaa umetumika — punguzo lako litaonekana kwenye jumla hapa chini.">Referral code applied — your discount will show in the total below.</span>
+            <span data-en="Referral code applied . your discount will show in the total below." data-sw="Msimbo wa rufaa umetumika . punguzo lako litaonekana kwenye jumla hapa chini.">Referral code applied . your discount will show in the total below.</span>
           </div>
 
           <div id="price-summary" class="price-summary" style="display:none;">
@@ -410,7 +400,7 @@ $token = csrf_token();
       <h2 data-en="House rules" data-sw="Kanuni za Nyumba">House rules</h2>
     </div>
     <div class="rules-grid">
-      <div class="rule-item"><strong data-en="Check-in" data-sw="Kuingia">Check-in</strong><span>2:00 PM — 8:00 PM</span></div>
+      <div class="rule-item"><strong data-en="Check-in" data-sw="Kuingia">Check-in</strong><span>2:00 PM . 8:00 PM</span></div>
       <div class="rule-item"><strong data-en="Check-out" data-sw="Kutoka">Check-out</strong><span>10:00 AM</span></div>
       <div class="rule-item"><strong data-en="No smoking indoors" data-sw="Hakuna kuvuta sigara ndani">No smoking indoors</strong><span data-en="Designated outdoor area available" data-sw="Eneo la nje limetengwa">Designated outdoor area available</span></div>
       <div class="rule-item"><strong data-en="No parties/events" data-sw="Hakuna sherehe">No parties/events</strong><span data-en="Quiet hours after 10 PM" data-sw="Masaa ya utulivu baada ya saa 4 usiku">Quiet hours after 10 PM</span></div>
@@ -429,7 +419,7 @@ $token = csrf_token();
     <div class="faq-list">
       <details class="faq-item">
         <summary data-en="Is parking available on site?" data-sw="Je, kuna maegesho pale pale?">Is parking available on site?</summary>
-        <p data-en="Yes.free, secure parking is included with every stay." data-sw="Ndiyo — maegesho salama na bure yamejumuishwa kwenye kila ukaaji.">Yes — free, secure parking is included with every stay.</p>
+        <p data-en="Yes.free, secure parking is included with every stay." data-sw="Ndiyo . maegesho salama na bure yamejumuishwa kwenye kila ukaaji.">Yes . free, secure parking is included with every stay.</p>
       </details>
       <details class="faq-item">
         <summary data-en="Can I bring extra guests beyond what I booked for?" data-sw="Naweza kuleta wageni wa ziada zaidi ya nilivyoweka?">Can I bring extra guests beyond what I booked for?</summary>
@@ -452,7 +442,7 @@ $token = csrf_token();
     <div class="section-head">
       <p class="eyebrow" style="color:var(--gold-light)" data-en="Get in Touch" data-sw="Wasiliana Nasi">Get in Touch</p>
       <h2 style="color:var(--cream)" data-en="We're here to help." data-sw="Tuko hapa kukusaidia.">We're here to help.</h2>
-      <p style="color:rgba(246,240,226,0.75)" data-en="Reach out any time — we'll take care of the rest." data-sw="Wasiliana wakati wowote — tutashughulikia mengine.">Reach out any time — we'll take care of the rest.</p>
+      <p style="color:rgba(246,240,226,0.75)" data-en="Reach out any time . we'll take care of the rest." data-sw="Wasiliana wakati wowote . tutashughulikia mengine.">Reach out any time . we'll take care of the rest.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-card">
@@ -487,7 +477,7 @@ $token = csrf_token();
       <a href="#">Facebook</a>
       <a href="#">Instagram</a>
       <a href="https://wa.me/<?php echo $whatsapp_number; ?>" target="_blank">WhatsApp</a>
-      <!-- <a href="admin/login.php" style="opacity:0.5;">Admin</a> -->
+      
     </span>
   </div>
 </footer>
