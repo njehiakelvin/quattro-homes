@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export GIT_WORK_TREE=/home/romfdgrb/quattro-homes
+    - git checkout -f HEAD
