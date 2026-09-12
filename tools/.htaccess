@@ -1,0 +1,3 @@
+# ── Tools — no direct access (delete files after use) ────────────────────────
+Order Allow,Deny
+Deny from all

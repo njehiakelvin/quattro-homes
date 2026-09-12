@@ -128,7 +128,7 @@ function send_email_message($to, $subject, $bodyText, $ctaText = null, $ctaUrl =
                 $mail->SMTPAuth = true;
                 $mail->Username = $settings['smtp_username'] ?? '';
                 $mail->Password = $settings['smtp_password'] ?? '';
-                $mail->SMTPSecure = ((int)($settings['smtp_port'] ?? 587) === 465) ? 'ssl' : 'tls';
+                $mail->SMTPSecure = ((int)($settings['smtp_port'] ?? 587) === 465) ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS : PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->setFrom(
                     $settings['smtp_from_email'] ?? 'info@quattrohomes.co.ke',
                     $settings['smtp_from_name'] ?? 'Quattro Homes'
@@ -141,6 +141,14 @@ function send_email_message($to, $subject, $bodyText, $ctaText = null, $ctaUrl =
                 $mail->send();
                 return true;
             } catch (Exception $e) {
+                // Log error for admin diagnosis
+                $logDir = __DIR__ . '/../logs';
+                if (!is_dir($logDir)) @mkdir($logDir, 0750, true);
+                @file_put_contents(
+                    $logDir . '/mail_errors.log',
+                    date('[Y-m-d H:i:s] ') . 'SMTP error to ' . $to . ': ' . $e->getMessage() . "\n",
+                    FILE_APPEND | LOCK_EX
+                );
                 return false;
             }
         }
@@ -323,9 +331,8 @@ function notify_booking_event(array $booking, string $event) {
             send_sms($booking['phone'], $t['guest']);
         }
     }
-    if (!empty($booking['email']) && ($channel === 'email' || $channel === 'both' || $channel === 'whatsapp')) {
-        // Email always sent as a reliable fallback even in "whatsapp" mode,
-        // since WhatsApp delivery depends on API credentials being configured.
+    if (!empty($booking['email'])) {
+        // Always send email — it's the most reliable fallback regardless of channel setting
         send_email_message($booking['email'], $t['subject'], $t['guest'], $t['cta_text'] ?? null, $t['cta_url'] ?? null, $t['heading'] ?? null);
     }
 

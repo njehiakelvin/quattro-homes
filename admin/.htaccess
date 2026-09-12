@@ -1,0 +1,20 @@
+# ── Admin panel — restrict access ───────────────────────────────────────────
+# Option 1: Allow only specific IPs (recommended — add your IP below)
+# Order Deny,Allow
+# Deny from all
+# Allow from 127.0.0.1
+# Allow from YOUR.IP.ADDRESS.HERE
+
+# Option 2: Require HTTP auth password (uncomment and create .htpasswd)
+# AuthType Basic
+# AuthName "Quattro Homes Admin"
+# AuthUserFile /path/to/.htpasswd
+# Require valid-user
+
+# Block direct PHP execution of included files
+<FilesMatch "^(config|functions|helper)\.php$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+Options -Indexes

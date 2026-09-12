@@ -105,9 +105,9 @@ $activePage      = 'about';
         </div>
         <div class="floor-body">
           <h3>Floor 1</h3>
-          <p>First-floor apartment with its own private entrance. Spacious living area, 2 furnished bedrooms, full kitchen, and bathroom. Great for guests who prefer easy First-level access.</p>
+          <p>First floor apartment with its own private entrance. Spacious living area, 2 furnished bedrooms, full kitchen, and bathroom. Great for guests who prefer easy ground-level access.</p>
           <div class="floor-tags">
-            <span>2 Bedrooms</span><span>Full Kitchen</span><span>Private Entrance</span><span>First Floor</span>
+            <span>2 Bedrooms</span><span>Full Kitchen</span><span>Private Entrance</span><span>Ground Floor</span>
           </div>
 
         </div>

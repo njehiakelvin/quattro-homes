@@ -290,15 +290,7 @@ nav.links a:hover, nav.links a.active { color: var(--gold-light); }
 .gallery-tab.active .tab-count { color: var(--gold); }
 .gallery-book-btn { flex-shrink: 0; padding: 9px 22px; font-size: 0.84rem; background: var(--gold); color: #111; border-color: var(--gold); font-weight: 700; }
 .gallery-book-btn:hover { background: var(--gold-light); border-color: var(--gold-light); transform: none; }
-.masonry-panel { padding: 32px 0 16px; background: var(--bg-subtle); }
-.masonry-grid { columns: 3; column-gap: 10px; padding: 0 28px; max-width: 1280px; margin: 0 auto; }
-.masonry-item { break-inside: avoid; position: relative; margin-bottom: 10px; border-radius: var(--radius); overflow: hidden; cursor: pointer; background: var(--border); }
-.masonry-item img { width: 100%; height: auto; display: block; transition: transform .4s ease; }
-.masonry-item:hover img { transform: scale(1.04); }
-.masonry-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%); opacity: 0; transition: opacity .3s; display: flex; align-items: flex-end; justify-content: space-between; padding: 14px; }
-.masonry-item:hover .masonry-overlay { opacity: 1; }
-.masonry-label { color: rgba(255,255,255,0.92); font-size: 0.78rem; letter-spacing: 0.03em; font-weight: 500; }
-.masonry-zoom { color: var(--gold-light); font-size: 1.1rem; }
+
 .gallery-cta-strip { background: var(--forest); padding: 52px 0; }
 .gallery-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 .gallery-cta-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #f5ede0; margin-bottom: 6px; }
@@ -413,7 +405,7 @@ nav.links a:hover, nav.links a.active { color: var(--gold-light); }
   .photos-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 140px 140px; gap: 4px; }
   .mosaic-large { grid-column: 1 / 3; grid-row: 1; }
   .floors-grid { grid-template-columns: 1fr; }
-  .masonry-grid { columns: 2; }
+
   .testimonial-grid { grid-template-columns: 1fr; }
   .gallery-cta-inner { flex-direction: column; text-align: center; }
   .gallery-cta-btns { justify-content: center; }
@@ -442,7 +434,7 @@ nav.links a:hover, nav.links a.active { color: var(--gold-light); }
   #cookie-banner { flex-direction: column; align-items: flex-start; padding: 16px 16px 18px; }
   .cookie-actions { width: 100%; }
   .cookie-accept, .cookie-decline { flex: 1; text-align: center; }
-  .masonry-grid { columns: 1; padding: 0 14px; }
+
   .gallery-book-btn { display: none; }
   .gallery-tab { padding: 0 10px; font-size: 0.8rem; }
   .contact-info-grid { grid-template-columns: repeat(2, 1fr); }
@@ -450,4 +442,154 @@ nav.links a:hover, nav.links a.active { color: var(--gold-light); }
   .lightbox-nav { width: 38px; height: 38px; font-size: 0.9rem; }
   .lightbox-nav.prev { left: 8px; }
   .lightbox-nav.next { right: 8px; }
+}
+
+/* ── Booking success card ── */
+.booking-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+.booking-success-icon {
+  font-size: 3.5rem;
+  color: #25D366;
+  margin-bottom: 18px;
+}
+.booking-success h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.booking-success p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.booking-success-note {
+  font-size: 0.85rem !important;
+  color: var(--text-faint) !important;
+}
+
+/* ── Gallery room groups ── */
+.gallery-room-group { margin-bottom: 44px; }
+.gallery-room-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  padding: 0 28px 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.gallery-room-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ══════════════════════════════════════════════════════
+   GALLERY — uniform grid
+   ══════════════════════════════════════════════════════ */
+.gallery-panel {
+  padding: 40px 0 24px;
+  background: var(--bg);
+}
+
+/* Room group divider */
+.gallery-room-group { margin-bottom: 48px; }
+.gallery-room-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  padding: 0 28px 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.gallery-room-label::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.gallery-room-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 0 28px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Individual item */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: var(--bg-subtle);
+  aspect-ratio: 4 / 3;
+  display: block;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .45s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity .3s;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-label {
+  color: rgba(255,255,255,0.92);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+.gallery-zoom { color: var(--gold-light); font-size: 1.05rem; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 18px; }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0 12px; }
+  .gallery-room-label { padding: 0 12px 12px; }
+  .gallery-item { aspect-ratio: 1 / 1; }
 }

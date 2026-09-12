@@ -1,0 +1,3 @@
+# ── Includes — no direct access ─────────────────────────────────────────────
+Order Allow,Deny
+Deny from all

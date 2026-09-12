@@ -223,12 +223,24 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch('process_booking.php', { method: 'POST', body: formData })
         .then(res => res.json())
         .then(data => {
-          feedback.textContent = data.message;
-          feedback.className = data.success ? 'success' : 'error';
           if (data.success) {
-            form.reset();
-            priceSummary.style.display = 'none';
-            fetchBookedDates(currentCalFloor);
+            // Replace entire form with success card
+            const formWrap = form.closest('.card') || form.parentElement;
+            formWrap.innerHTML = `
+              <div class="booking-success">
+                <div class="booking-success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3>Request received!</h3>
+                <p>${data.message}</p>
+                <p class="booking-success-note">We will contact you on WhatsApp or phone to confirm. Check your email for a summary.</p>
+                <a href="index.php" class="btn btn-primary" style="margin-top:24px;display:inline-block;">Back to Home</a>
+              </div>
+            `;
+            // Refresh calendar if visible
+            if (typeof fetchBookedDates === 'function') fetchBookedDates(typeof currentCalFloor !== 'undefined' ? currentCalFloor : 'floor2');
+          } else {
+            feedback.textContent = data.message;
+            feedback.className = 'error';
+            feedback.style.display = 'block';
           }
         })
         .catch(() => {
@@ -475,8 +487,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function homeFetchDates(floor) {
       if (homeLoading) homeLoading.style.display = 'flex';
-      fetch('api/get_bookings.php?floor=' + encodeURIComponent(floor))
-        .then(r => r.json()).then(data => { homeBookedRanges = Array.isArray(data) ? data : []; homeRenderCal(); })
+      fetch('get_booked_dates.php?floor=' + encodeURIComponent(floor))
+        .then(r => r.json()).then(data => { homeBookedRanges = (data && data.ranges) ? data.ranges : (Array.isArray(data) ? data : []); homeRenderCal(); })
         .catch(() => { homeBookedRanges = []; homeRenderCal(); })
         .finally(() => { if (homeLoading) homeLoading.style.display = 'none'; });
     }
@@ -547,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
         gTabs.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const tab = btn.getAttribute('data-tab');
-        document.querySelectorAll('.masonry-panel').forEach(p => {
+        document.querySelectorAll('.gallery-panel').forEach(p => {
           p.style.display = p.id === 'panel-' + tab ? '' : 'none';
         });
       });
@@ -616,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach click to all masonry items
-    document.querySelectorAll('.masonry-item').forEach(item => {
+    document.querySelectorAll('.gallery-item').forEach(item => {
       item.addEventListener('click', () => {
         const tab   = item.getAttribute('data-tab');
         const index = parseInt(item.getAttribute('data-index'), 10);

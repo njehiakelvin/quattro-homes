@@ -94,6 +94,7 @@
   </div>
 </div>
 
-<script src="js/script.js"></script>
+<?php $jsVer = file_exists(__DIR__.'/../js/script.js') ? substr(md5(filemtime(__DIR__.'/../js/script.js')),0,8) : '1'; ?>
+<script src="js/script.js?v=<?php echo $jsVer; ?>"></script>
 </body>
 </html>

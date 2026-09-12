@@ -24,7 +24,10 @@ $ogImageUrl = $siteUrlBase ? $siteUrlBase . '/images/floor2/IMG_5856.jpg' : 'ima
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="css/style.css">
+<?php
+$cssVer = file_exists(__DIR__.'/../css/style.css') ? substr(md5(filemtime(__DIR__.'/../css/style.css')),0,8) : '1';
+?>
+<link rel="stylesheet" href="css/style.css?v=<?php echo $cssVer; ?>">
 <?php if (($activePage ?? '') === 'home'): ?>
 <script type="application/ld+json">
 {
