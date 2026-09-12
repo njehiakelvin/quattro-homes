@@ -287,27 +287,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 <script src="admin.js"></script>
 
 <script>
-document.getElementById('test-smtp-btn')?.addEventListener('click', function() {
-  const btn = this;
-  const result = document.getElementById('test-smtp-result');
-  const to = prompt('Send test email to:', '<?php echo htmlspecialchars($settings["notify_email"] ?? ""); ?>');
-  if (!to) return;
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
-  result.textContent = '';
-  fetch('test_smtp.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: 'to=' + encodeURIComponent(to) + '&csrf_token=<?php echo csrf_token(); ?>'
-  })
-  .then(r => r.json())
-  .then(data => {
-    result.textContent = data.message;
-    result.style.color = data.success ? '#27ae60' : '#c0392b';
-  })
-  .catch(() => { result.textContent = 'Request failed'; result.style.color = '#c0392b'; })
-  .finally(() => { btn.disabled = false; btn.textContent = 'Send Test Email'; });
-});
+(function() {
+  var btn = document.getElementById('test-smtp-btn');
+  if (!btn) return;
+  // Get CSRF token from the main settings form
+  function getCsrf() {
+    var el = document.querySelector('input[name="csrf_token"]');
+    return el ? el.value : '';
+  }
+  btn.addEventListener('click', function() {
+    var defaultTo = document.getElementById('notify_email') 
+                  ? document.getElementById('notify_email').value 
+                  : '';
+    var to = prompt('Send test email to:', defaultTo);
+    if (!to) return;
+    var result = document.getElementById('test-smtp-result');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    result.textContent = '';
+    result.style.color = '#888';
+    fetch('test_smtp.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'to=' + encodeURIComponent(to) + '&csrf_token=' + encodeURIComponent(getCsrf())
+    })
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      result.textContent = data.message;
+      result.style.color = data.success ? '#27ae60' : '#c0392b';
+    })
+    .catch(function(err) {
+      result.textContent = 'Request failed: ' + err.message + '. Check browser console for details.';
+      result.style.color = '#c0392b';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Send Test Email';
+    });
+  });
+})();
 </script>
 </body>
 </html>

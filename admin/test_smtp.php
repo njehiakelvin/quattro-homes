@@ -1,28 +1,33 @@
 <?php
 /**
  * SMTP Test — sends a test email using current settings.
- * Only accessible from admin panel. Returns JSON.
+ * Accessed via POST from admin settings page.
  */
+
+// Session must start before ANY output
+session_start();
+
 require_once __DIR__ . '/../includes/settings.php';
 require_once __DIR__ . '/../includes/security.php';
 require_once __DIR__ . '/../includes/db.php';
 
 header('Content-Type: application/json');
 
-// Must be POST with valid CSRF
+// Must be logged-in admin
+if (empty($_SESSION['admin_logged_in'])) {
+    echo json_encode(['success' => false, 'message' => 'Not authorised. Please log in to admin first.']);
+    exit;
+}
+
+// Must be POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
     exit;
 }
-if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
-    echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
-    exit;
-}
 
-// Must be logged-in admin
-session_start();
-if (empty($_SESSION['admin_logged_in'])) {
-    echo json_encode(['success' => false, 'message' => 'Not authorised.']);
+// CSRF check
+if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+    echo json_encode(['success' => false, 'message' => 'Security token mismatch. Reload the page and try again.']);
     exit;
 }
 
@@ -30,24 +35,29 @@ $to       = filter_var(trim($_POST['to'] ?? ''), FILTER_VALIDATE_EMAIL);
 $settings = getSettings();
 
 if (!$to) {
-    echo json_encode(['success' => false, 'message' => 'Invalid recipient email address.']);
+    echo json_encode(['success' => false, 'message' => 'Enter a valid email address to send the test to.']);
     exit;
 }
 
 if (empty($settings['smtp_host'])) {
-    echo json_encode(['success' => false, 'message' => 'SMTP host is not configured. Save your SMTP settings first.']);
+    echo json_encode(['success' => false, 'message' => 'SMTP host is empty. Fill in and save your SMTP settings first.']);
+    exit;
+}
+
+if (empty($settings['smtp_password'])) {
+    echo json_encode(['success' => false, 'message' => 'SMTP password is empty. Re-enter and save your password first.']);
     exit;
 }
 
 // Load PHPMailer
-$phpMailerPath = __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
-if (!file_exists($phpMailerPath)) {
-    echo json_encode(['success' => false, 'message' => 'PHPMailer not found at ' . $phpMailerPath]);
+$base = __DIR__ . '/../includes/PHPMailer/';
+if (!file_exists($base . 'PHPMailer.php')) {
+    echo json_encode(['success' => false, 'message' => 'PHPMailer files not found at ' . $base]);
     exit;
 }
-require_once $phpMailerPath;
-require_once __DIR__ . '/../includes/PHPMailer/SMTP.php';
-require_once __DIR__ . '/../includes/PHPMailer/Exception.php';
+require_once $base . 'PHPMailer.php';
+require_once $base . 'SMTP.php';
+require_once $base . 'Exception.php';
 
 try {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
@@ -66,24 +76,27 @@ try {
     );
     $mail->addAddress($to);
     $mail->isHTML(true);
-    $mail->Subject = 'Quattro Homes — SMTP Test Email';
+    $mail->Subject = 'Quattro Homes SMTP Test';
     $mail->Body    = '<p>This is a test email from <strong>Quattro Homes</strong>.</p>'
-                   . '<p>If you received this, your SMTP settings are working correctly.</p>'
-                   . '<p style="color:#888;font-size:12px;">Sent: ' . date('Y-m-d H:i:s') . ' | Host: ' . htmlspecialchars($settings['smtp_host']) . ':' . $settings['smtp_port'] . '</p>';
-    $mail->AltBody = 'SMTP test from Quattro Homes. If you received this, your SMTP settings are working.';
+                   . '<p>Your SMTP settings are working correctly.</p>'
+                   . '<p style="color:#999;font-size:12px;">Sent via: '
+                   . htmlspecialchars($settings['smtp_host']) . ':' . (int)$settings['smtp_port']
+                   . ' at ' . date('Y-m-d H:i:s T') . '</p>';
+    $mail->AltBody = 'SMTP test from Quattro Homes — settings are working correctly.';
     $mail->send();
 
     echo json_encode([
         'success' => true,
-        'message' => 'Test email sent to ' . $to . '. Check your inbox (and spam folder).'
+        'message' => 'Sent! Check the inbox (and spam folder) of ' . $to
     ]);
+
 } catch (Exception $e) {
-    // Log it
+    // Log to file
     $logDir = __DIR__ . '/../logs';
     if (!is_dir($logDir)) @mkdir($logDir, 0750, true);
     @file_put_contents(
         $logDir . '/mail_errors.log',
-        date('[Y-m-d H:i:s] ') . 'SMTP TEST error to ' . $to . ': ' . $e->getMessage() . "\n",
+        date('[Y-m-d H:i:s] ') . 'SMTP TEST to ' . $to . ': ' . $e->getMessage() . "\n",
         FILE_APPEND | LOCK_EX
     );
 
