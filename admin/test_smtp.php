@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // CSRF check
-if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+if (!csrf_verify($_POST['csrf_token'] ?? '')) {
     echo json_encode(['success' => false, 'message' => 'Security token mismatch. Reload the page and try again.']);
     exit;
 }
