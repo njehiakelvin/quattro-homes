@@ -92,7 +92,8 @@ try {
         send_whatsapp_message($settings['owner_whatsapp_number'], "[Issue report] {$full_name} ({$category}): " . mb_substr($description, 0, 300));
     }
     if (!empty($settings['notify_email'])) {
-        send_email_message($settings['notify_email'], 'New issue report — Quattro Homes', $body);
+        $dashboardLink = !empty($settings['site_url']) ? rtrim($settings['site_url'], '/') . '/admin/issues.php' : null;
+        send_email_message($settings['notify_email'], 'New issue report: Quattro Homes', $body, $dashboardLink ? 'View Issue in Dashboard' : null, $dashboardLink, 'New issue reported');
     }
 
     $response['success'] = true;

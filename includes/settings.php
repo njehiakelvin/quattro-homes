@@ -9,8 +9,8 @@ function getSettings() {
             'currency' => 'KES',
             'min_stay_nights' => '1',
             'whatsapp_number' => '254733545858',
-            'contact_email' => 'info@quattrohomes.example',
-            'notify_email' => 'owner@quattrohomes.example',
+            'contact_email' => 'info@quattrohomes.co.ke',
+            'notify_email' => 'gilbert@quattrohomes.co.ke',
             'discount_percent' => '0',
             'discount_min_nights' => '7',
             'included_guests' => '2',
@@ -27,9 +27,15 @@ function getSettings() {
             'at_sender_id' => '',
             'whatsapp_verify_token' => '',
             'auto_reply_bot_enabled' => '1',
-            'site_url' => 'https://quattrohomes.example',
+            'site_url' => 'https://quattrohomes.co.ke',
             'wifi_ssid' => '',
             'wifi_password' => '',
+            'smtp_host' => '',
+            'smtp_port' => '587',
+            'smtp_username' => '',
+            'smtp_password' => '',
+            'smtp_from_email' => 'info@quattrohomes.co.ke',
+            'smtp_from_name' => 'Quattro Homes',
         ];
         try {
             $pdo = getDB();

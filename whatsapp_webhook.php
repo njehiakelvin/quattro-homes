@@ -2,11 +2,11 @@
 /**
  * WhatsApp webhook endpoint.
  *
- * Set this URL (https://yourdomain.com/whatsapp_webhook.php) in Meta Business >
+ * Set this URL (https://quattrohomes.co.ke/whatsapp_webhook.php) in Meta Business >
  * WhatsApp > Configuration > Webhook, with the same Verify Token you set in
  * the admin settings panel ("WhatsApp Verify Token").
  *
- * This implements a simple, rule-based menu bot — not free-form AI chat.
+ * This implements a simple, rule-based menu bot. Not free-form AI chat.
  * It covers: enquiries, starting a booking, checking a booking's status,
  * and handing off to a human. Toggle it off entirely from the admin
  * settings panel ("Auto-reply bot") if you'd rather handle WhatsApp manually.
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if (($settings['auto_reply_bot_enabled'] ?? '1') !== '1') {
-    http_response_code(200); // bot disabled — acknowledge but do nothing
+    http_response_code(200); // bot disabled. acknowledge but do nothing
     exit;
 }
 
@@ -110,10 +110,10 @@ switch ($state) {
             save_session($pdo, $from, 'menu', []);
         } elseif ($text === '3') {
             save_session($pdo, $from, 'status_ref', []);
-            reply($from, "Sure — what's your booking reference number? (e.g. 1023, from your confirmation)");
+            reply($from, "Sure, what's your booking reference number? (e.g. 1023, from your confirmation)");
         } elseif ($text === '4') {
             save_session($pdo, $from, 'human', []);
-            reply($from, "No problem — a member of our team will reach out to you here shortly.");
+            reply($from, "No problem, a member of our team will reach out to you here shortly.");
             if (!empty($settings['owner_whatsapp_number'])) {
                 send_whatsapp_message($settings['owner_whatsapp_number'], "[Bot handoff] Guest {$from} wants to talk to a human.");
             }
@@ -211,7 +211,7 @@ switch ($state) {
         break;
 
     case 'human':
-        // Session stays in 'human' state until guest types 'menu' — messages just pass through to staff manually.
+        // Session stays in 'human' state until guest types 'menu'. messages just pass through to staff manually.
         break;
 
     default:

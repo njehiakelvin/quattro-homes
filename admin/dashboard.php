@@ -45,42 +45,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout_booking_id']
     exit;
 }
 
-// Handle settings update (price, discount, min stay, WhatsApp number)
-$settingsSaved = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
-    $updates = [
-        'price_per_night' => max(0, (float)($_POST['price_per_night'] ?? 0)),
-        'min_stay_nights' => max(1, (int)($_POST['min_stay_nights'] ?? 1)),
-        'discount_percent' => min(100, max(0, (float)($_POST['discount_percent'] ?? 0))),
-        'discount_min_nights' => max(1, (int)($_POST['discount_min_nights'] ?? 1)),
-        'included_guests' => max(1, (int)($_POST['included_guests'] ?? 2)),
-        'extra_guest_fee' => max(0, (float)($_POST['extra_guest_fee'] ?? 0)),
-        'referral_discount_percent' => min(100, max(0, (float)($_POST['referral_discount_percent'] ?? 0))),
-        'referral_reward_percent' => min(100, max(0, (float)($_POST['referral_reward_percent'] ?? 0))),
-        'whatsapp_access_token' => trim($_POST['whatsapp_access_token'] ?? ''),
-        'whatsapp_phone_number_id' => trim($_POST['whatsapp_phone_number_id'] ?? ''),
-        'owner_whatsapp_number' => trim($_POST['owner_whatsapp_number'] ?? ''),
-        'notifications_channel' => in_array($_POST['notifications_channel'] ?? '', ['whatsapp', 'email', 'both'], true) ? $_POST['notifications_channel'] : 'whatsapp',
-        'at_username' => trim($_POST['at_username'] ?? ''),
-        'at_api_key' => trim($_POST['at_api_key'] ?? ''),
-        'at_sender_id' => trim($_POST['at_sender_id'] ?? ''),
-        'whatsapp_verify_token' => trim($_POST['whatsapp_verify_token'] ?? ''),
-        'auto_reply_bot_enabled' => isset($_POST['auto_reply_bot_enabled']) ? '1' : '0',
-        'site_url' => rtrim(trim($_POST['site_url'] ?? ''), '/'),
-        'wifi_ssid' => trim($_POST['wifi_ssid'] ?? ''),
-        'wifi_password' => trim($_POST['wifi_password'] ?? ''),
-        'whatsapp_number' => trim($_POST['whatsapp_number'] ?? ''),
-    ];
-    $stmt = $pdo->prepare(
-        "INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v)
-         ON DUPLICATE KEY UPDATE setting_value = :v2"
-    );
-    foreach ($updates as $key => $value) {
-        $stmt->execute([':k' => $key, ':v' => $value, ':v2' => $value]);
+// Handle recording an external booking (Airbnb, Booking.com, walk-in, etc.) as occupied
+$blockError = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['block_dates'])) {
+    $blockFloor = in_array($_POST['block_floor'] ?? '', ['floor1', 'floor2', 'both'], true) ? $_POST['block_floor'] : 'floor2';
+    $blockCheckin = trim($_POST['block_checkin'] ?? '');
+    $blockCheckout = trim($_POST['block_checkout'] ?? '');
+    $blockSource = trim($_POST['block_source'] ?? '') ?: 'Other';
+    $blockGuestName = trim($_POST['block_guest_name'] ?? '');
+    $blockLabel = $blockGuestName !== '' ? "{$blockGuestName} ({$blockSource})" : "Booked via {$blockSource}";
+
+    $ci = DateTime::createFromFormat('Y-m-d', $blockCheckin);
+    $co = DateTime::createFromFormat('Y-m-d', $blockCheckout);
+
+    if (!$ci || !$co || $co <= $ci) {
+        $blockError = 'Please provide a valid check-in and check-out date, with check-out after check-in.';
+    } else {
+        $floorCondition = $blockFloor === 'both'
+            ? "floor IN ('floor1', 'floor2', 'both')"
+            : "floor IN (:floor, 'both')";
+        $checkSql = "SELECT COUNT(*) FROM bookings WHERE status != 'cancelled' AND checkin_date < :checkout AND checkout_date > :checkin AND {$floorCondition}";
+        $checkStmt = $pdo->prepare($checkSql);
+        $checkParams = [':checkout' => $blockCheckout, ':checkin' => $blockCheckin];
+        if ($blockFloor !== 'both') $checkParams[':floor'] = $blockFloor;
+        $checkStmt->execute($checkParams);
+
+        if ($checkStmt->fetchColumn() > 0) {
+            $blockError = 'Those dates overlap an existing booking or block for this unit.';
+        } else {
+            $nights = (int)$ci->diff($co)->days;
+            $insert = $pdo->prepare(
+                "INSERT INTO bookings (full_name, email, phone, checkin_date, checkout_date, floor, nights, total_price, guests, purpose, message, status, is_blocked)
+                 VALUES (:name, '', '', :checkin, :checkout, :floor, :nights, NULL, 0, :source, :label, 'confirmed', 1)"
+            );
+            $insert->execute([
+                ':name' => $blockLabel,
+                ':checkin' => $blockCheckin,
+                ':checkout' => $blockCheckout,
+                ':floor' => $blockFloor,
+                ':nights' => $nights,
+                ':source' => $blockSource,
+                ':label' => $blockLabel,
+            ]);
+            header('Location: dashboard.php' . (isset($_GET['status']) ? '?status=' . urlencode($_GET['status']) : ''));
+            exit;
+        }
     }
-    $settingsSaved = true;
-    // getSettings() caches statically, so merge our fresh values in for this render
-    $settings = array_merge($settings, $updates);
+}
+
+// Handle deleting a booking entirely (permanent — used for blocks or mistaken entries)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_booking_id'])) {
+    $deleteId = (int)$_POST['delete_booking_id'];
+    $stmt = $pdo->prepare("DELETE FROM bookings WHERE id = :id");
+    $stmt->execute([':id' => $deleteId]);
+    header('Location: dashboard.php' . (isset($_GET['status']) ? '?status=' . urlencode($_GET['status']) : ''));
+    exit;
 }
 
 $filter = $_GET['status'] ?? 'all';
@@ -102,7 +121,7 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard — Quattro Homes Admin</title>
+<title>Dashboard | Quattro Homes Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -120,6 +139,8 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
     <a href="reviews.php">Reviews</a>
     <a href="issues.php">Issues</a>
     <a href="referrals.php">Referrals</a>
+    <a href="blog.php">Blog</a>
+    <a href="settings.php">Settings</a>
     <a href="logout.php">Log out</a>
   </nav>
 </header>
@@ -142,147 +163,59 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
   </div>
 
   <div class="card settings-card">
-    <h3 style="margin-top:0;">Pricing &amp; Settings</h3>
-    <?php if ($settingsSaved): ?>
-      <div id="form-feedback" class="success">Settings updated.</div>
+    <h3 style="margin-top:0;">Mark as Occupied (External Booking)</h3>
+    <p style="font-size:0.8rem;color:#999;margin:0 0 14px;">
+      Record a booking made outside our site (Airbnb, Booking.com, walk-in, phone booking, etc.)
+      so it correctly blocks these dates on the calendar and stops double-bookings.
+    </p>
+    <?php if ($blockError): ?>
+      <div id="form-feedback" class="error"><?php echo htmlspecialchars($blockError); ?></div>
     <?php endif; ?>
     <form method="post" class="settings-form">
-      <input type="hidden" name="save_settings" value="1">
+      <input type="hidden" name="block_dates" value="1">
       <div class="form-row">
         <div class="field">
-          <label for="price_per_night">Price per night (<?php echo htmlspecialchars($settings['currency']); ?>)</label>
-          <input type="number" min="0" step="1" id="price_per_night" name="price_per_night" value="<?php echo htmlspecialchars($settings['price_per_night']); ?>">
+          <label for="block_floor">Unit</label>
+          <select id="block_floor" name="block_floor">
+            <option value="floor2">Floor 2</option>
+            <option value="floor1">Floor 1</option>
+            <option value="both">Both floors</option>
+          </select>
         </div>
         <div class="field">
-          <label for="min_stay_nights">Minimum stay (nights)</label>
-          <input type="number" min="1" step="1" id="min_stay_nights" name="min_stay_nights" value="<?php echo htmlspecialchars($settings['min_stay_nights']); ?>">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="discount_percent">Long-stay discount (%)</label>
-          <input type="number" min="0" max="100" step="1" id="discount_percent" name="discount_percent" value="<?php echo htmlspecialchars($settings['discount_percent']); ?>">
-        </div>
-        <div class="field">
-          <label for="discount_min_nights">Discount applies from (nights)</label>
-          <input type="number" min="1" step="1" id="discount_min_nights" name="discount_min_nights" value="<?php echo htmlspecialchars($settings['discount_min_nights']); ?>">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="included_guests">Guests included in base price</label>
-          <input type="number" min="1" step="1" id="included_guests" name="included_guests" value="<?php echo htmlspecialchars($settings['included_guests']); ?>">
-        </div>
-        <div class="field">
-          <label for="extra_guest_fee">Extra guest fee / night (<?php echo htmlspecialchars($settings['currency']); ?>)</label>
-          <input type="number" min="0" step="1" id="extra_guest_fee" name="extra_guest_fee" value="<?php echo htmlspecialchars($settings['extra_guest_fee']); ?>">
-        </div>
-      </div>
-      <div class="field">
-        <label for="whatsapp_number">WhatsApp number shown on site (international format, no +)</label>
-        <input type="text" id="whatsapp_number" name="whatsapp_number" value="<?php echo htmlspecialchars($settings['whatsapp_number']); ?>">
-      </div>
-
-      <hr style="border:none;border-top:1px solid var(--line);margin:22px 0 18px;">
-      <p style="font-weight:600;color:var(--forest);font-size:0.85rem;margin:0 0 4px;">Guest Notifications</p>
-      <p style="font-size:0.78rem;color:#999;margin:0 0 14px;">
-        Sent automatically at each step: request received, confirmed, cancelled, and checked out.
-      </p>
-      <div class="field">
-        <label for="notifications_channel">Preferred channel</label>
-        <select id="notifications_channel" name="notifications_channel">
-          <option value="whatsapp" <?php echo $settings['notifications_channel']==='whatsapp'?'selected':''; ?>>WhatsApp (email as backup)</option>
-          <option value="both" <?php echo $settings['notifications_channel']==='both'?'selected':''; ?>>WhatsApp + Email (both always)</option>
-          <option value="email" <?php echo $settings['notifications_channel']==='email'?'selected':''; ?>>Email only</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="whatsapp_phone_number_id">WhatsApp Cloud API — Phone Number ID</label>
-          <input type="text" id="whatsapp_phone_number_id" name="whatsapp_phone_number_id" value="<?php echo htmlspecialchars($settings['whatsapp_phone_number_id']); ?>" placeholder="From Meta Business > WhatsApp > API Setup">
-        </div>
-        <div class="field">
-          <label for="whatsapp_access_token">WhatsApp Cloud API — Access Token</label>
-          <input type="password" id="whatsapp_access_token" name="whatsapp_access_token" value="<?php echo htmlspecialchars($settings['whatsapp_access_token']); ?>" placeholder="System user access token">
-        </div>
-      </div>
-      <div class="field">
-        <label for="owner_whatsapp_number">Your WhatsApp number for internal alerts</label>
-        <input type="text" id="owner_whatsapp_number" name="owner_whatsapp_number" value="<?php echo htmlspecialchars($settings['owner_whatsapp_number']); ?>">
-      </div>
-      <p style="font-size:0.78rem;color:#999;margin:-6px 0 0;">
-        Until the Phone Number ID and Access Token are filled in, WhatsApp sends are skipped automatically and email is used instead — nothing breaks.
-      </p>
-
-      <hr style="border:none;border-top:1px solid var(--line);margin:22px 0 18px;">
-      <p style="font-weight:600;color:var(--forest);font-size:0.85rem;margin:0 0 4px;">SMS &amp; Call Alerts (Africa's Talking)</p>
-      <p style="font-size:0.78rem;color:#999;margin:0 0 14px;">
-        Used as a backup if WhatsApp isn't configured/delivered, and for an urgent automated call on same-day cancellations.
-      </p>
-      <div class="form-row">
-        <div class="field">
-          <label for="at_username">Africa's Talking username</label>
-          <input type="text" id="at_username" name="at_username" value="<?php echo htmlspecialchars($settings['at_username']); ?>" placeholder="e.g. sandbox, or your live username">
-        </div>
-        <div class="field">
-          <label for="at_api_key">Africa's Talking API key</label>
-          <input type="password" id="at_api_key" name="at_api_key" value="<?php echo htmlspecialchars($settings['at_api_key']); ?>">
-        </div>
-      </div>
-      <div class="field">
-        <label for="at_sender_id">Sender ID / Virtual number (required for voice calls)</label>
-        <input type="text" id="at_sender_id" name="at_sender_id" value="<?php echo htmlspecialchars($settings['at_sender_id']); ?>">
-      </div>
-
-      <hr style="border:none;border-top:1px solid var(--line);margin:22px 0 18px;">
-      <p style="font-weight:600;color:var(--forest);font-size:0.85rem;margin:0 0 4px;">WhatsApp Auto-Reply Bot</p>
-      <div class="field">
-        <label for="whatsapp_verify_token">Webhook Verify Token</label>
-        <input type="text" id="whatsapp_verify_token" name="whatsapp_verify_token" value="<?php echo htmlspecialchars($settings['whatsapp_verify_token']); ?>" placeholder="Any string you choose — enter the same one in Meta's webhook setup">
-      </div>
-      <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--forest);cursor:pointer;">
-        <input type="checkbox" name="auto_reply_bot_enabled" value="1" <?php echo ($settings['auto_reply_bot_enabled'] ?? '1') === '1' ? 'checked' : ''; ?> style="width:auto;">
-        Enable auto-reply bot (enquiries, booking, status checks via WhatsApp)
-      </label>
-      <p style="font-size:0.78rem;color:#999;margin:8px 0 0;">
-        Webhook URL to set in Meta Business: <code>https://yourdomain.com/whatsapp_webhook.php</code>
-      </p>
-
-      <hr style="border:none;border-top:1px solid var(--line);margin:22px 0 18px;">
-      <p style="font-weight:600;color:var(--forest);font-size:0.85rem;margin:0 0 4px;">Site &amp; Guest Info</p>
-      <p style="font-size:0.78rem;color:#999;margin:0 0 14px;">
-        The site URL is used to build referral links and the "report an issue" link sent in confirmation messages.
-        WiFi details are included automatically in the confirmation message once a booking is confirmed.
-      </p>
-      <div class="field">
-        <label for="site_url">Site URL (no trailing slash)</label>
-        <input type="text" id="site_url" name="site_url" value="<?php echo htmlspecialchars($settings['site_url']); ?>" placeholder="https://yourdomain.com">
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="wifi_ssid">WiFi network name</label>
-          <input type="text" id="wifi_ssid" name="wifi_ssid" value="<?php echo htmlspecialchars($settings['wifi_ssid']); ?>">
-        </div>
-        <div class="field">
-          <label for="wifi_password">WiFi password</label>
-          <input type="text" id="wifi_password" name="wifi_password" value="<?php echo htmlspecialchars($settings['wifi_password']); ?>">
+          <label for="block_source">Booked via</label>
+          <select id="block_source" name="block_source">
+            <option value="Airbnb">Airbnb</option>
+            <option value="Booking.com">Booking.com</option>
+            <option value="Walk-in">Walk-in</option>
+            <option value="Phone">Phone</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
       </div>
       <div class="form-row">
         <div class="field">
-          <label for="referral_discount_percent">Referral: new guest discount (%)</label>
-          <input type="number" min="0" max="100" step="1" id="referral_discount_percent" name="referral_discount_percent" value="<?php echo htmlspecialchars($settings['referral_discount_percent']); ?>">
+          <label for="block_guest_name">Guest name (optional)</label>
+          <input type="text" id="block_guest_name" name="block_guest_name" placeholder="e.g. Jane Doe" maxlength="120">
+        </div>
+        <div class="field"></div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="block_checkin">Check-in</label>
+          <input type="date" id="block_checkin" name="block_checkin" required>
         </div>
         <div class="field">
-          <label for="referral_reward_percent">Referral: referrer reward (%)</label>
-          <input type="number" min="0" max="100" step="1" id="referral_reward_percent" name="referral_reward_percent" value="<?php echo htmlspecialchars($settings['referral_reward_percent']); ?>">
+          <label for="block_checkout">Check-out</label>
+          <input type="date" id="block_checkout" name="block_checkout" required>
         </div>
       </div>
-      <button type="submit" class="submit-btn" style="width:auto;padding:12px 28px;">Save Settings</button>
+      <button type="submit" class="submit-btn" style="width:auto;padding:12px 28px;">Mark as Occupied</button>
     </form>
-    <p style="font-size:0.8rem;color:#999;margin-top:10px;">
-      Set discount to 0% to disable long-stay discounts. Changes apply immediately to the live booking form.
+    <p style="font-size:0.78rem;color:#999;margin-top:10px;">
+      This won't send any WhatsApp/email notifications, since there's no guest record from our site to notify.
     </p>
+    </form>
   </div>
 
   <div class="card" style="padding:0;overflow-x:auto;">
@@ -297,8 +230,11 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
           <tr><td colspan="11" style="text-align:center;padding:30px;color:#999;">No bookings found.</td></tr>
         <?php endif; ?>
         <?php foreach ($bookings as $b): ?>
-          <tr>
-            <td data-label="Guest"><?php echo htmlspecialchars($b['full_name']); ?></td>
+          <tr<?php echo !empty($b['is_blocked']) ? ' style="background:#faf7f0;"' : ''; ?>>
+            <td data-label="Guest">
+              <?php echo htmlspecialchars($b['full_name']); ?>
+              <?php if (!empty($b['is_blocked'])): ?><br><span class="badge" style="background:#e5e0d8;color:#6b6357;">External</span><?php endif; ?>
+            </td>
             <td data-label="Contact">
               <?php echo htmlspecialchars($b['phone']); ?><br>
               <span style="color:#999;font-size:0.8rem;"><?php echo htmlspecialchars($b['email']); ?></span>
@@ -314,7 +250,9 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
             <td data-label="Total"><?php echo $b['total_price'] !== null ? htmlspecialchars($settings['currency'] . ' ' . number_format($b['total_price'])) : '&mdash;'; ?></td>
             <td data-label="Status"><span class="badge badge-<?php echo $b['status']; ?>"><?php echo ucfirst($b['status']); ?></span></td>
             <td data-label="Checkout">
-              <?php if (!empty($b['checked_out_at'])): ?>
+              <?php if (!empty($b['is_blocked'])): ?>
+                <span style="color:#bbb;">&mdash;</span>
+              <?php elseif (!empty($b['checked_out_at'])): ?>
                 <span class="badge badge-confirmed"><i class="fa-solid fa-circle-check"></i> <?php echo htmlspecialchars(date('M j', strtotime($b['checked_out_at']))); ?></span>
               <?php elseif ($b['status'] === 'confirmed'): ?>
                 <form method="post">
@@ -326,7 +264,8 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
               <?php endif; ?>
             </td>
             <td data-label="Action">
-              <form method="post" style="display:flex;gap:6px;">
+              <?php if (empty($b['is_blocked'])): ?>
+              <form method="post" style="display:flex;gap:6px;margin-bottom:6px;">
                 <input type="hidden" name="booking_id" value="<?php echo (int)$b['id']; ?>">
                 <select name="new_status" class="mini-select">
                   <option value="pending" <?php echo $b['status']==='pending'?'selected':''; ?>>Pending</option>
@@ -334,6 +273,11 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
                   <option value="cancelled" <?php echo $b['status']==='cancelled'?'selected':''; ?>>Cancelled</option>
                 </select>
                 <button type="submit" class="mini-btn">Save</button>
+              </form>
+              <?php endif; ?>
+              <form method="post" onsubmit="return confirm('Delete this <?php echo !empty($b['is_blocked']) ? 'external booking record' : 'booking'; ?> permanently? This cannot be undone.');">
+                <input type="hidden" name="delete_booking_id" value="<?php echo (int)$b['id']; ?>">
+                <button type="submit" class="mini-btn" style="background:#a3382a;">Delete</button>
               </form>
             </td>
           </tr>
@@ -343,5 +287,6 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
   </div>
 
 </div>
+<script src="admin.js"></script>
 </body>
 </html>

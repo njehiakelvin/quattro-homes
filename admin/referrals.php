@@ -38,7 +38,7 @@ $counts = $pdo->query("SELECT reward_status, COUNT(*) c FROM referrals GROUP BY 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Referrals — Quattro Homes Admin</title>
+<title>Referrals | Quattro Homes Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -56,6 +56,8 @@ $counts = $pdo->query("SELECT reward_status, COUNT(*) c FROM referrals GROUP BY 
     <a href="reviews.php">Reviews</a>
     <a href="issues.php">Issues</a>
     <a href="referrals.php" class="active">Referrals</a>
+    <a href="blog.php">Blog</a>
+    <a href="settings.php">Settings</a>
     <a href="logout.php">Log out</a>
   </nav>
 </header>
@@ -113,5 +115,6 @@ $counts = $pdo->query("SELECT reward_status, COUNT(*) c FROM referrals GROUP BY 
   </div>
 
 </div>
+<script src="admin.js"></script>
 </body>
 </html>

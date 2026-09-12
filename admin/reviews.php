@@ -33,7 +33,7 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM reviews GROUP BY status")-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reviews — Quattro Homes Admin</title>
+<title>Reviews | Quattro Homes Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -51,6 +51,8 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM reviews GROUP BY status")-
     <a href="reviews.php" class="active">Reviews</a>
     <a href="issues.php">Issues</a>
     <a href="referrals.php">Referrals</a>
+    <a href="blog.php">Blog</a>
+    <a href="settings.php">Settings</a>
     <a href="logout.php">Log out</a>
   </nav>
 </header>
@@ -86,7 +88,7 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM reviews GROUP BY status")-
             <td data-label="Guest"><?php echo htmlspecialchars($r['full_name']); ?><br><span style="color:#999;font-size:0.8rem;"><?php echo htmlspecialchars($r['email']); ?></span></td>
             <td data-label="Stay"><?php echo htmlspecialchars($r['checkin_date']); ?> &rarr; <?php echo htmlspecialchars($r['checkout_date']); ?></td>
             <td data-label="Rating"><?php echo str_repeat('★', (int)$r['rating']) . str_repeat('☆', 5 - (int)$r['rating']); ?></td>
-            <td data-label="Comment"><?php echo $r['comment'] ? nl2br(htmlspecialchars($r['comment'])) : '<span style="color:#bbb;">—</span>'; ?></td>
+            <td data-label="Comment"><?php echo $r['comment'] ? nl2br(htmlspecialchars($r['comment'])) : '<span style="color:#bbb;">-</span>'; ?></td>
             <td data-label="Submitted"><?php echo htmlspecialchars(date('M j, Y', strtotime($r['created_at']))); ?></td>
             <td data-label="Status"><span class="badge badge-<?php echo $r['status'] === 'approved' ? 'confirmed' : ($r['status'] === 'rejected' ? 'cancelled' : 'pending'); ?>"><?php echo ucfirst($r['status']); ?></span></td>
             <td data-label="Action">
@@ -107,5 +109,6 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM reviews GROUP BY status")-
   </div>
 
 </div>
+<script src="admin.js"></script>
 </body>
 </html>

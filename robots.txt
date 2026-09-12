@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /report-issue.php
+Disallow: /report_issue.php
+Disallow: /process_booking.php
+Disallow: /submit_review.php
+Disallow: /get_booked_dates.php
+Disallow: /whatsapp_webhook.php
+Disallow: /migration.sql
+Disallow: /schema.sql
+
+Sitemap: https://quattrohomes.co.ke/sitemap.php

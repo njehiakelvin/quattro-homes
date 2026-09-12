@@ -12,6 +12,7 @@ $prefillBooking = isset($_GET['booking']) && ctype_digit($_GET['booking']) ? $_G
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Report an Issue | Quattro Homes</title>
+<meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
@@ -32,7 +33,7 @@ $prefillBooking = isset($_GET['booking']) && ctype_digit($_GET['booking']) ? $_G
     <div class="section-head">
       <p class="eyebrow">Currently Staying or Recently Stayed?</p>
       <h2>Report an issue</h2>
-      <p>Booking problem, billing question, or something at the property that needs attention — let us know and we'll follow up promptly.</p>
+      <p>Booking problem, billing question, or something at the property that needs attention. Let us know and we'll follow up promptly.</p>
     </div>
     <form id="issue-form" class="card" style="max-width:640px;margin:0 auto;" autocomplete="off">
       <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
@@ -77,7 +78,7 @@ $prefillBooking = isset($_GET['booking']) && ctype_digit($_GET['booking']) ? $_G
       <div id="issue-feedback"></div>
     </form>
     <p style="text-align:center;margin-top:20px;">
-      <a href="https://wa.me/<?php echo htmlspecialchars($settings['whatsapp_number']); ?>" target="_blank" style="color:var(--forest);font-size:0.9rem;">
+      <a href="https://wa.me/<?php echo htmlspecialchars($settings['whatsapp_number']); ?>" target="_blank" style="font-size:0.9rem;">
         <i class="fa-brands fa-whatsapp"></i> Prefer WhatsApp? Message us directly
       </a>
     </p>
@@ -96,7 +97,7 @@ document.getElementById('issue-form').addEventListener('submit', function (e) {
   const feedback = document.getElementById('issue-feedback');
   const btn = document.getElementById('issue-submit-btn');
   btn.disabled = true;
-  btn.textContent = 'Sending...';
+  btn.innerHTML = '<span class="spinner"></span>Sending...';
   feedback.className = '';
   feedback.style.display = 'none';
 

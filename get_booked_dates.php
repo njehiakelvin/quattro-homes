@@ -17,7 +17,7 @@ switch ($floor) {
     case 'floor2':
         $floorCondition = "floor IN ('floor2', 'both')";
         break;
-    default: // 'both' — blocked by ANY existing booking on either floor
+    default: // 'both'. blocked by ANY existing booking on either floor
         $floorCondition = "floor IN ('floor1', 'floor2', 'both')";
 }
 

@@ -33,7 +33,7 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM issue_reports GROUP BY sta
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reported Issues — Quattro Homes Admin</title>
+<title>Reported Issues | Quattro Homes Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -51,6 +51,8 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM issue_reports GROUP BY sta
     <a href="reviews.php">Reviews</a>
     <a href="issues.php" class="active">Issues</a>
     <a href="referrals.php">Referrals</a>
+    <a href="blog.php">Blog</a>
+    <a href="settings.php">Settings</a>
     <a href="logout.php">Log out</a>
   </nav>
 </header>
@@ -85,7 +87,7 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM issue_reports GROUP BY sta
           <tr>
             <td data-label="Reporter"><?php echo htmlspecialchars($i['full_name']); ?><br><span style="color:#999;font-size:0.8rem;"><?php echo htmlspecialchars($i['email']); ?><?php echo $i['phone'] ? ' · ' . htmlspecialchars($i['phone']) : ''; ?></span></td>
             <td data-label="Category"><?php echo htmlspecialchars(ucfirst($i['category'])); ?></td>
-            <td data-label="Booking Ref"><?php echo $i['booking_id'] ? '#' . (int)$i['booking_id'] : '<span style="color:#bbb;">—</span>'; ?></td>
+            <td data-label="Booking Ref"><?php echo $i['booking_id'] ? '#' . (int)$i['booking_id'] : '<span style="color:#bbb;">-</span>'; ?></td>
             <td data-label="Description"><?php echo nl2br(htmlspecialchars($i['description'])); ?></td>
             <td data-label="Submitted"><?php echo htmlspecialchars(date('M j, Y', strtotime($i['created_at']))); ?></td>
             <td data-label="Status"><span class="badge badge-<?php echo $i['status'] === 'resolved' ? 'confirmed' : ($i['status'] === 'open' ? 'cancelled' : 'pending'); ?>"><?php echo ucfirst(str_replace('_', ' ', $i['status'])); ?></span></td>
@@ -107,5 +109,6 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM issue_reports GROUP BY sta
   </div>
 
 </div>
+<script src="admin.js"></script>
 </body>
 </html>

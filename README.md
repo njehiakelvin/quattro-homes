@@ -1,131 +1,115 @@
-# Quattro Homes — Booking Website (v4)
+# Quattro Homes — Booking Website (v6)
 
-A PHP + MySQL booking site for Quattro Homes (Bungoma, Kenya) — two floors/units,
-each independently bookable, with WhatsApp-first guest communication.
+A PHP + MySQL booking site for Quattro Homes (Bungoma, Kenya). Domain:
+quattrohomes.co.ke. Two floors/units, each independently bookable, WhatsApp-first
+guest communication, branded HTML emails, and a small blog for SEO.
 
-## Feature summary
+## What's new since v6
 
-**Guest-facing site**
-- Hero (real Floor 2 photo), About, Gallery (Floor 2 shown first, then Floor 1 — each
-  labeled since they're different units with different finishes), Features, Pricing,
-  Testimonials + review-submission form, House Rules, FAQ, Contact + map
-- **Per-floor booking & availability**: guests choose Floor 1, Floor 2, or Both (whole
-  house) — the calendar and live pricing adjust to match; booking one floor doesn't
-  block the other, but "Both" is blocked by any booking on either floor
-- Live booking form: nights & total price recalculate as dates/guests/floor change,
-  long-stay and referral discounts applied automatically, live overlap checking
-- **Referral program with auto-apply links**: after checkout, guests get a personal
-  link (`?ref=QH1023`) — opening it auto-fills and applies the referral discount,
-  no code to type
-- EN / SW language toggle, mobile-responsive throughout
-- Floating WhatsApp button (site-wide)
-- Font Awesome icons throughout (replacing emoji)
+- **Dark / light theme toggle** — a moon/sun button next to the language toggle
+  on every page. Preference is remembered (localStorage) and respects the
+  visitor's OS preference on first visit. Header, hero, footer, and buttons
+  stay their brand dark-green/gold regardless of theme (they're designed to);
+  the rest of each page's background/text inverts.
+- **Photos given much more presence**:
+  - The homepage hero is now a rotating photo carousel (auto-advances every
+    5 seconds, with click-to-jump dots) instead of a single static image.
+  - New "See It For Yourself" photo strip on the homepage, a larger featured
+    grid linking straight to the full gallery.
+  - The gallery page itself now shows fewer, much larger photos per row.
+  - Every gallery photo opens in a full-screen lightbox on click (arrow keys,
+    on-screen prev/next, and a counter), instead of just sitting as a static
+    thumbnail grid.
 
-**Admin dashboard** (`admin/`)
-- `dashboard.php` — bookings list (with floor/unit shown), status updates, "mark
-  checked out", and a full Settings panel: pricing, discounts, extra-guest fee,
-  referral %, WhatsApp/SMS/voice config, WiFi details, site URL, auto-reply bot toggle
-- `reviews.php` — approve/reject guest reviews before they go live
-- `issues.php` — manage reported issues (open / in progress / resolved)
-- `referrals.php` — track referral link usage and mark rewards as issued
-- `login.php` / `logout.php` — session-based admin auth
+## Replacing the Floor 1 photos
 
-**Notifications** (`includes/notify.php`)
-- WhatsApp (via Meta's WhatsApp Cloud API) for booking created/confirmed/cancelled/
-  checked-out — confirmation messages include WiFi details and a personal "report an
-  issue" link; the checkout message includes the guest's referral link
-- Email as an always-on fallback
-- SMS backup + urgent automated voice call for same-day cancellations (via Africa's
-  Talking)
-- All channels degrade gracefully — if credentials aren't configured, sends are
-  skipped silently rather than breaking the booking flow
+When you upload the new Floor 1 batch, keep the same filenames as the current
+set in `images/floor1/` (or update the `<img src="...">` paths in `gallery.php`,
+`index.php`, and `about.php` if the filenames change) and the site picks them
+up automatically, no other code changes needed.
 
-**WhatsApp auto-reply bot** (`whatsapp_webhook.php`)
-- Rule-based menu bot: book a stay, check pricing, check booking status, or hand off
-  to a human. Conversation state stored in the `whatsapp_sessions` table. Toggle
-  on/off from the admin settings panel
+## What's new in v6
 
-**Report an issue** — no longer a public site section. It's a standalone page
-(`report-issue.php`) linked only from the booking-confirmed message, intended for
-guests who are already staying or have stayed.
+- **Blog system** for SEO: `blog.php` (listing), `blog-post.php` (article, with
+  Article structured data), and `admin/blog.php` (create/edit/delete posts,
+  draft/published status). Seeded with two starter posts in `schema.sql`.
+- **Dynamic sitemap** (`sitemap.php`) replacing the static `sitemap.xml` —
+  automatically includes every published blog post. `robots.txt` updated to
+  point at it.
+- **Real SMTP email via PHPMailer** (vendored into `includes/PHPMailer/`,
+  no Composer required) instead of PHP's bare `mail()`. Configure your vendor's
+  SMTP details for `info@quattrohomes.co.ke` in Settings; falls back to
+  `mail()` automatically if SMTP host is left blank.
+- **Branded HTML emails with CTA buttons** — every notification (booking
+  received/confirmed/cancelled/checked-out, issue reports, admin alerts) now
+  renders as a styled HTML email with a clear call-to-action button (WhatsApp
+  chat, report an issue, rebook, leave a review, view in dashboard), not just
+  plain text.
+- Admin alerts now go to **gilbert@quattrohomes.co.ke** by default; guest-facing
+  "From" address defaults to **info@quattrohomes.co.ke**.
+- Domain set to **quattrohomes.co.ke** throughout (sitemap, robots.txt, default
+  Site URL setting).
+- "Mark as Occupied" (external bookings from Airbnb/Booking.com/walk-ins) and
+  booking delete, from the previous update, remain in `admin/dashboard.php`.
 
-## File structure
-```
-quattro-homes/
-├── index.php                 Main site
-├── preview.html              Static, self-contained preview (mock data, no PHP needed)
-├── report-issue.php          Guest-facing issue report page (linked via confirmation msg)
-├── process_booking.php       Booking form handler (floor-aware validation, pricing, notify)
-├── get_booked_dates.php      Booked dates + settings as JSON, filtered by floor
-├── submit_review.php         Guest review submission handler
-├── report_issue.php          Issue report form handler (backend for report-issue.php)
-├── whatsapp_webhook.php      WhatsApp bot webhook (verification + message handling)
-├── schema.sql                 Full database schema
-├── includes/
-│   ├── db.php                PDO database connection
-│   ├── settings.php           Loads all settings from the DB (with sane defaults)
-│   ├── security.php           CSRF token + basic rate limiter
-│   └── notify.php             WhatsApp / SMS / voice / email notification helpers
-├── admin/
-│   ├── dashboard.php          Bookings (by floor) + Settings panel
-│   ├── reviews.php            Review moderation
-│   ├── issues.php             Issue report management
-│   ├── referrals.php          Referral tracking
-│   ├── login.php / logout.php / auth.php
-│   └── admin.css
-├── css/style.css
-├── js/script.js
-└── images/
-    ├── floor1/, floor2/        Real property photos (used by the site)
-    └── floor1_originals_backup/  Safety backup of Floor 1 originals
-```
+## Site structure (pages)
+
+| Page | Purpose |
+|---|---|
+| `index.php` | Home |
+| `about.php` | About Us |
+| `gallery.php` | Photo gallery (Floor 2 / Floor 1 tabs) |
+| `pricing.php` | Pricing + referral explainer |
+| `book.php` | Booking form + floor-aware availability calendar |
+| `testimonials.php` | Guest reviews + review form |
+| `blog.php` / `blog-post.php` | Blog listing and article pages |
+| `faq.php` | House rules + FAQ |
+| `contact.php` | Contact info + map |
+| `report-issue.php` | Private support page (linked only from confirmation emails, `noindex`) |
+
+Admin: `admin/dashboard.php` (bookings), `reviews.php`, `issues.php`,
+`referrals.php`, `blog.php` (post management), `settings.php`.
 
 ## Setup
 
-1. **Create the database**
-   ```
-   mysql -u root -p < schema.sql
-   ```
-
+1. **Create the database**: `mysql -u root -p < schema.sql`
+   (If upgrading an existing install, run `migration.sql` instead/first.)
 2. **Configure the connection** in `includes/db.php`.
-
-3. **Set your admin password** — replace the placeholder hash:
+3. **Set your admin password**:
    ```
    php -r "echo password_hash('your_new_password', PASSWORD_DEFAULT);"
    ```
    ```sql
    UPDATE admin_users SET password_hash = 'PASTE_HASH_HERE' WHERE username = 'admin';
    ```
+4. **Configure email (important)** — go to `admin/settings.php` → Email (SMTP)
+   and fill in your vendor's SMTP host/port/username/password for
+   `info@quattrohomes.co.ke`. Common examples: Zoho Mail (`smtp.zoho.com`,
+   port 587), Google Workspace (`smtp.gmail.com`, port 587 with an app
+   password), or whatever your hosting/email provider gives you. Until this
+   is filled in, email falls back to the server's basic `mail()` function,
+   which many hosts either block or mark as spam, so this step matters.
+5. **Configure WhatsApp/SMS/site URL** as before, also in `admin/settings.php`.
+6. Run on any PHP 7.4+/8.x + MySQL server, visit `index.php`. Admin at
+   `admin/login.php`.
 
-4. **Configure everything else from the admin panel** (`admin/dashboard.php` → Settings):
-   - Price per night, discounts, extra-guest fee, referral percentages
-   - **Site URL** — required for referral links and the report-issue link to work
-   - **WiFi name/password** — included automatically in confirmation messages
-   - **WhatsApp Cloud API**: Phone Number ID + Access Token (Meta Business Suite →
-     WhatsApp → API Setup) — needed for automated WhatsApp notifications and the bot
-   - **WhatsApp webhook**: set `https://yourdomain.com/whatsapp_webhook.php` as the
-     webhook URL in Meta's dashboard, using the same Verify Token set in the panel
-   - **Africa's Talking**: username + API key (africastalking.com) for SMS/voice.
-     Use `sandbox` as the username while testing
+## Writing blog posts
 
-   None of these are required for the site to function — booking, admin, reviews, and
-   issue reporting all work without them. They only add the WhatsApp/SMS/voice layer.
+From `admin/blog.php`: title, URL slug (auto-generated from the title if left
+blank), excerpt (shown on the listing page), meta description (for search
+engines), an optional cover image path, and content (basic HTML — `<p>` and
+`<h2>` tags work well). Save as Draft to keep it unpublished, or Published to
+make it live and included in the sitemap automatically.
 
-5. **Run it** on any PHP 7.4+/8.x + MySQL server, then visit `index.php`.
-   Visit `admin/login.php` to manage bookings, reviews, issues, and referrals.
+## Note on previewing
 
-## Previewing without a server
-
-Open `preview.html` directly — same design and most interactions (calendar, floor
-selector, live pricing, language toggle, floating WhatsApp button), but with CSS/JS
-inlined and mock data instead of live database calls, so no PHP install is required.
+The site is multi-page and database-backed, so it needs a real PHP + MySQL
+server to view (XAMPP, Laragon, or any LAMP host) — no standalone preview file.
 
 ## Still worth adding later
 
-- Real SMTP email (PHPMailer) instead of PHP's built-in `mail()`
 - A proper captcha if spam becomes an issue beyond the honeypot/rate-limit
-- Distinct whole-house rate for "Both floors" instead of a flat 2× multiplier, if desired
+- Distinct whole-house rate for "Both floors" instead of a flat 2x multiplier
 - Free-form AI-driven WhatsApp conversation (current bot is rule-based/menu-driven)
-- Floor 1 photo reshoot with consistent white lighting, and/or repainting the one
-  purple wall — see prior notes on why color-correction alone couldn't fully fix this
-- A true 360° virtual tour if panorama photos are captured later
+- Floor 1 photo reshoot with consistent white lighting
+- A rich-text editor for blog post content instead of raw HTML textarea

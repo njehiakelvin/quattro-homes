@@ -1,5 +1,5 @@
 <?php
-// Database connection settings — update these for your server
+// Database connection settings. update these for your server
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'quattro_homes');
 define('DB_USER', 'root');

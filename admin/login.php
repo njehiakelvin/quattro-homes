@@ -22,7 +22,7 @@ if (admin_logged_in()) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login — Quattro Homes</title>
+<title>Admin Login | Quattro Homes</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="admin.css">
@@ -54,5 +54,6 @@ if (admin_logged_in()) {
       </p>
     </div>
   </div>
+<script src="admin.js"></script>
 </body>
 </html>
