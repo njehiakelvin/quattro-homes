@@ -139,7 +139,7 @@ INSERT INTO settings (setting_key, setting_value) VALUES
     ('site_url', 'https://quattrohomes.co.ke'),
     ('wifi_ssid', ''),
     ('wifi_password', '')
-ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value);
+ON DUPLICATE KEY UPDATE setting_key = setting_key; -- never overwrite saved settings
 
 -- Default admin login: username "admin" / password "change_me_now"
 -- Generate a real hash before going live:

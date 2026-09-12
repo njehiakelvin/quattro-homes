@@ -24,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         'smtp_host' => trim($_POST['smtp_host'] ?? ''),
         'smtp_port' => trim($_POST['smtp_port'] ?? '587'),
         'smtp_username' => trim($_POST['smtp_username'] ?? ''),
-        'smtp_password' => trim($_POST['smtp_password'] ?? ''),
+        // Keep existing password if field left blank (browser may not resend it)
+        'smtp_password' => (trim($_POST['smtp_password'] ?? '') !== '')
+            ? trim($_POST['smtp_password'])
+            : ($settings['smtp_password'] ?? ''),
         'smtp_from_email' => trim($_POST['smtp_from_email'] ?? ''),
         'smtp_from_name' => trim($_POST['smtp_from_name'] ?? ''),
         'contact_email' => trim($_POST['contact_email'] ?? ''),
@@ -147,7 +150,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         </div>
         <div class="field">
           <label for="smtp_password">SMTP Password</label>
-          <input type="password" id="smtp_password" name="smtp_password" value="<?php echo htmlspecialchars($settings['smtp_password']); ?>">
+          <input type="password" id="smtp_password" name="smtp_password"
+            placeholder="Leave blank to keep existing password"
+            autocomplete="new-password">
+          <?php if (!empty($settings['smtp_password'])): ?>
+            <small style="color:#888;">Password is saved. Leave blank to keep it unchanged.</small>
+          <?php else: ?>
+            <small style="color:#c0392b;">No password saved yet.</small>
+          <?php endif; ?>
         </div>
       </div>
       <div class="form-row">
@@ -158,6 +168,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         <div class="field">
           <label for="smtp_from_name">From name</label>
           <input type="text" id="smtp_from_name" name="smtp_from_name" value="<?php echo htmlspecialchars($settings['smtp_from_name']); ?>">
+          <div style="margin-top:16px;">
+            <button type="button" id="test-smtp-btn" class="btn btn-outline" style="font-size:0.85rem;">
+              Send Test Email
+            </button>
+            <span id="test-smtp-result" style="margin-left:12px;font-size:0.85rem;"></span>
+          </div>
         </div>
       </div>
       <div class="field">
@@ -269,5 +285,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
 </div>
 <script src="admin.js"></script>
+
+<script>
+document.getElementById('test-smtp-btn')?.addEventListener('click', function() {
+  const btn = this;
+  const result = document.getElementById('test-smtp-result');
+  const to = prompt('Send test email to:', '<?php echo htmlspecialchars($settings["notify_email"] ?? ""); ?>');
+  if (!to) return;
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  result.textContent = '';
+  fetch('test_smtp.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: 'to=' + encodeURIComponent(to) + '&csrf_token=<?php echo csrf_token(); ?>'
+  })
+  .then(r => r.json())
+  .then(data => {
+    result.textContent = data.message;
+    result.style.color = data.success ? '#27ae60' : '#c0392b';
+  })
+  .catch(() => { result.textContent = 'Request failed'; result.style.color = '#c0392b'; })
+  .finally(() => { btn.disabled = false; btn.textContent = 'Send Test Email'; });
+});
+</script>
 </body>
 </html>
