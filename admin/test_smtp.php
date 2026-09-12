@@ -4,9 +4,7 @@
  * Accessed via POST from admin settings page.
  */
 
-// Session must start before ANY output
-session_start();
-
+require_once __DIR__ . '/auth.php';        // starts session correctly
 require_once __DIR__ . '/../includes/settings.php';
 require_once __DIR__ . '/../includes/security.php';
 require_once __DIR__ . '/../includes/db.php';
@@ -14,7 +12,7 @@ require_once __DIR__ . '/../includes/db.php';
 header('Content-Type: application/json');
 
 // Must be logged-in admin
-if (empty($_SESSION['admin_logged_in'])) {
+if (!admin_logged_in()) {
     echo json_encode(['success' => false, 'message' => 'Not authorised. Please log in to admin first.']);
     exit;
 }
