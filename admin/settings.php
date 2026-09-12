@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/../includes/security.php';
 require_once __DIR__ . '/../includes/settings.php';
 require_admin_login();
 
@@ -91,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     <?php endif; ?>
     <form method="post" class="settings-form">
       <input type="hidden" name="save_settings" value="1">
+      <input type="hidden" name="csrf_token" id="csrf_token_field" value="<?php echo htmlspecialchars(csrf_token()); ?>">
       <div class="form-row">
         <div class="field">
           <label for="price_per_night">Price per night (<?php echo htmlspecialchars($settings['currency']); ?>)</label>
@@ -292,7 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
   if (!btn) return;
   // Get CSRF token from the main settings form
   function getCsrf() {
-    var el = document.querySelector('input[name="csrf_token"]');
+    var el = document.getElementById('csrf_token_field')
+           || document.querySelector('input[name="csrf_token"]');
     return el ? el.value : '';
   }
   btn.addEventListener('click', function() {
