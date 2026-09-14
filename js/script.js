@@ -1,5 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ── Page loader ────────────────────────────────────────────────
+  const pageLoader = document.getElementById('page-loader');
+  if (pageLoader) {
+    // Minimum display time so the animation completes (feels intentional, not flash)
+    const minDisplay = 1800; // ms
+    const startTime  = Date.now();
+
+    function hideLoader() {
+      const elapsed = Date.now() - startTime;
+      const delay   = Math.max(0, minDisplay - elapsed);
+      setTimeout(() => {
+        pageLoader.classList.add('fade-out');
+        // Remove from DOM after transition
+        pageLoader.addEventListener('transitionend', () => {
+          pageLoader.remove();
+        }, { once: true });
+      }, delay);
+    }
+
+    if (document.readyState === 'complete') {
+      hideLoader();
+    } else {
+      window.addEventListener('load', hideLoader);
+      // Safety fallback — never block the page more than 4s
+      setTimeout(hideLoader, 4000);
+    }
+  }
+
+
   // ---------- Booking form + availability calendar (book.php only) ----------
   const form = document.getElementById('booking-form');
   if (form) {

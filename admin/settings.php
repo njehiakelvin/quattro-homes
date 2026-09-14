@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
             : ($settings['smtp_password'] ?? ''),
         'smtp_from_email' => trim($_POST['smtp_from_email'] ?? ''),
         'smtp_from_name' => trim($_POST['smtp_from_name'] ?? ''),
+        'notify_email'  => trim($_POST['notify_email'] ?? ''),
+        'notify_email'  => trim($_POST['notify_email'] ?? ''),
         'contact_email' => trim($_POST['contact_email'] ?? ''),
         'at_username' => trim($_POST['at_username'] ?? ''),
         'at_api_key' => trim($_POST['at_api_key'] ?? ''),
@@ -166,20 +168,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         <div class="field">
           <label for="smtp_from_email">From email address</label>
           <input type="text" id="smtp_from_email" name="smtp_from_email" value="<?php echo htmlspecialchars($settings['smtp_from_email']); ?>">
+
+          <label for="notify_email" style="margin-top:14px;display:block;">
+            Admin notification email <small style="font-weight:400;color:#888;">(booking alerts sent here)</small>
+          </label>
+          <input type="email" id="notify_email" name="notify_email"
+            value="<?php echo htmlspecialchars($settings['notify_email'] ?? ''); ?>"
+            placeholder="e.g. info@quattrohomes.co.ke">
         </div>
         <div class="field">
           <label for="smtp_from_name">From name</label>
           <input type="text" id="smtp_from_name" name="smtp_from_name" value="<?php echo htmlspecialchars($settings['smtp_from_name']); ?>">
-          <div style="margin-top:16px;">
-            <button type="button" id="test-smtp-btn" class="btn btn-outline" style="font-size:0.85rem;">
-              Send Test Email
-            </button>
-            <span id="test-smtp-result" style="margin-left:12px;font-size:0.85rem;"></span>
-          </div>
         </div>
       </div>
       <div class="field">
-        <label for="contact_email">Public contact email (shown on site, not used for sending)</label>
+        <label for="notify_email">Admin notification email <small style="color:#888;">(booking alerts sent here)</small></label>
+        <input type="email" id="notify_email" name="notify_email"
+               value="<?php echo htmlspecialchars($settings['notify_email'] ?? ''); ?>"
+               placeholder="e.g. info@quattrohomes.co.ke" required>
+
+        <label for="contact_email" style="margin-top:14px;display:block;">Public contact email <small style="color:#888;">(shown on site, not used for sending)</small></label>
         <input type="text" id="contact_email" name="contact_email" value="<?php echo htmlspecialchars($settings['contact_email']); ?>">
       </div>
 
@@ -287,51 +295,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
 </div>
 <script src="admin.js"></script>
-
-<script>
-(function() {
-  var btn = document.getElementById('test-smtp-btn');
-  if (!btn) return;
-  // Get CSRF token from the main settings form
-  function getCsrf() {
-    var el = document.getElementById('csrf_token_field')
-           || document.querySelector('input[name="csrf_token"]');
-    return el ? el.value : '';
-  }
-  btn.addEventListener('click', function() {
-    var defaultTo = document.getElementById('notify_email') 
-                  ? document.getElementById('notify_email').value 
-                  : '';
-    var to = prompt('Send test email to:', defaultTo);
-    if (!to) return;
-    var result = document.getElementById('test-smtp-result');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    result.textContent = '';
-    result.style.color = '#888';
-    fetch('test_smtp.php', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: 'to=' + encodeURIComponent(to) + '&csrf_token=' + encodeURIComponent(getCsrf())
-    })
-    .then(function(r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function(data) {
-      result.textContent = data.message;
-      result.style.color = data.success ? '#27ae60' : '#c0392b';
-    })
-    .catch(function(err) {
-      result.textContent = 'Request failed: ' + err.message + '. Check browser console for details.';
-      result.style.color = '#c0392b';
-    })
-    .finally(function() {
-      btn.disabled = false;
-      btn.textContent = 'Send Test Email';
-    });
-  });
-})();
-</script>
 </body>
 </html>

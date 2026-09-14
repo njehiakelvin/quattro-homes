@@ -218,7 +218,7 @@ $activePage      = 'home';
     <?php
       $reviews = [];
       try {
-        $stmt = getDB()->query("SELECT reviewer_name, rating, review_text, created_at FROM reviews WHERE approved=1 ORDER BY created_at DESC LIMIT 6");
+        $stmt = getDB()->query("SELECT full_name, rating, comment, created_at FROM reviews WHERE status='approved' ORDER BY created_at DESC LIMIT 6");
         $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch(Exception $e) {}
     ?>
@@ -227,8 +227,8 @@ $activePage      = 'home';
       <?php foreach($reviews as $r): ?>
       <div class="testimonial-card">
         <div class="stars"><?php echo str_repeat('<i class="fa-solid fa-star"></i>', (int)$r['rating']); ?><?php echo str_repeat('<i class="fa-regular fa-star"></i>', 5-(int)$r['rating']); ?></div>
-        <p>"<?php echo htmlspecialchars($r['review_text']); ?>"</p>
-        <div class="testimonial-name"><?php echo htmlspecialchars($r['reviewer_name']); ?> &nbsp;·&nbsp; <?php echo date('M Y', strtotime($r['created_at'])); ?></div>
+        <p>"<?php echo htmlspecialchars($r['comment']); ?>"</p>
+        <div class="testimonial-name"><?php echo htmlspecialchars($r['full_name']); ?> &nbsp;·&nbsp; <?php echo date('M Y', strtotime($r['created_at'])); ?></div>
       </div>
       <?php endforeach; ?>
     </div>

@@ -56,17 +56,23 @@ if ($rating < 1 || $rating > 5) {
 try {
     $pdo = getDB();
 
-    // Verify the booking exists, belongs to this email, and has a completed stay
+    // Verify the booking exists and belongs to this email
     $stmt = $pdo->prepare(
-        "SELECT id, full_name FROM bookings
-         WHERE id = :id AND email = :email AND status = 'confirmed' AND checked_out_at IS NOT NULL"
+        "SELECT id, full_name, checkout_date FROM bookings
+         WHERE id = :id AND email = :email AND status = 'confirmed'"
     );
     $stmt->execute([':id' => (int)$booking_ref, ':email' => $email]);
     $booking = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$booking) {
-        $response['message'] = "We couldn't match that booking reference and email to a checked-out stay. "
-            . "Reviews can only be left after your stay has been checked out by our team.";
+        $response['message'] = "We couldn't find a confirmed booking with that reference and email address.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Only allow reviews after checkout date has passed
+    if (!empty($booking['checkout_date']) && strtotime($booking['checkout_date']) > time()) {
+        $response['message'] = 'Reviews can only be submitted after your stay has ended.';
         echo json_encode($response);
         exit;
     }

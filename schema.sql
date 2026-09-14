@@ -113,7 +113,7 @@ INSERT INTO settings (setting_key, setting_value) VALUES
     ('min_stay_nights', '1'),
     ('whatsapp_number', '254733545858'),
     ('contact_email', 'info@quattrohomes.co.ke'),
-    ('notify_email', 'gilbert@quattrohomes.co.ke'),
+    ('notify_email', ''),
     ('discount_percent', '0'),
     ('discount_min_nights', '7'),
     ('included_guests', '2'),

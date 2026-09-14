@@ -16,7 +16,28 @@
       <div class="footer-socials">
         <a href="#" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="#" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://wa.me/<?php echo $settings['whatsapp_number']; ?>" target="_blank" aria-label="WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-mark">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Key head (circle) -->
+        <circle class="key-head" cx="28" cy="28" r="16" fill="none" stroke="#c8a15c" stroke-width="3.5"/>
+        <circle class="key-hole" cx="28" cy="28" r="6" fill="none" stroke="#c8a15c" stroke-width="2.5"/>
+        <!-- Key shaft -->
+        <line class="key-shaft" x1="40" y1="28" x2="70" y2="28" stroke="#c8a15c" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Key teeth -->
+        <line class="key-tooth-1" x1="55" y1="28" x2="55" y2="37" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+        <line class="key-tooth-2" x1="63" y1="28" x2="63" y2="34" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Preparing your stay&hellip;</p>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
+
+<a href="https://wa.me/<?php echo $settings['whatsapp_number']; ?>" target="_blank" aria-label="WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://twitter.com/" target="_blank" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
       </div>
     </div>
@@ -44,7 +65,28 @@
     <!-- Contact + Share -->
     <div class="footer-col">
       <h5 data-en="Contact" data-sw="Wasiliana">Contact</h5>
-      <a href="https://wa.me/<?php echo $settings['whatsapp_number']; ?>" target="_blank"><i class="fa-brands fa-whatsapp" style="width:16px;"></i> WhatsApp</a>
+      
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-mark">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Key head (circle) -->
+        <circle class="key-head" cx="28" cy="28" r="16" fill="none" stroke="#c8a15c" stroke-width="3.5"/>
+        <circle class="key-hole" cx="28" cy="28" r="6" fill="none" stroke="#c8a15c" stroke-width="2.5"/>
+        <!-- Key shaft -->
+        <line class="key-shaft" x1="40" y1="28" x2="70" y2="28" stroke="#c8a15c" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Key teeth -->
+        <line class="key-tooth-1" x1="55" y1="28" x2="55" y2="37" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+        <line class="key-tooth-2" x1="63" y1="28" x2="63" y2="34" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Preparing your stay&hellip;</p>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
+
+<a href="https://wa.me/<?php echo $settings['whatsapp_number']; ?>" target="_blank"><i class="fa-brands fa-whatsapp" style="width:16px;"></i> WhatsApp</a>
       <a href="mailto:<?php echo htmlspecialchars($settings['contact_email'] ?? 'info@quattrohomes.co.ke'); ?>"><i class="fa-regular fa-envelope" style="width:16px;"></i> Email</a>
       <a href="contact.php"><i class="fa-solid fa-location-dot" style="width:16px;"></i> Bungoma, Kenya</a>
 
@@ -52,7 +94,28 @@
       <div class="footer-share">
         <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($settings['site_url'] ?? ''); ?>" target="_blank" aria-label="Share on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="https://twitter.com/intent/tweet?text=<?php echo urlencode('Quattro Homes, Exclusive 2-bedroom stays in Bungoma, Kenya. '); ?>&url=<?php echo urlencode($settings['site_url'] ?? ''); ?>" target="_blank" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://wa.me/?text=<?php echo urlencode('Check out Quattro Homes, exclusive stays in Bungoma, Kenya: ' . ($settings['site_url'] ?? '')); ?>" target="_blank" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-mark">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Key head (circle) -->
+        <circle class="key-head" cx="28" cy="28" r="16" fill="none" stroke="#c8a15c" stroke-width="3.5"/>
+        <circle class="key-hole" cx="28" cy="28" r="6" fill="none" stroke="#c8a15c" stroke-width="2.5"/>
+        <!-- Key shaft -->
+        <line class="key-shaft" x1="40" y1="28" x2="70" y2="28" stroke="#c8a15c" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Key teeth -->
+        <line class="key-tooth-1" x1="55" y1="28" x2="55" y2="37" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+        <line class="key-tooth-2" x1="63" y1="28" x2="63" y2="34" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Preparing your stay&hellip;</p>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
+
+<a href="https://wa.me/?text=<?php echo urlencode('Check out Quattro Homes, exclusive stays in Bungoma, Kenya: ' . ($settings['site_url'] ?? '')); ?>" target="_blank" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode($settings['site_url'] ?? ''); ?>&title=<?php echo urlencode('Quattro Homes Bungoma'); ?>" target="_blank" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
@@ -69,6 +132,27 @@
     </div>
   </div>
 </footer>
+
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-mark">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Key head (circle) -->
+        <circle class="key-head" cx="28" cy="28" r="16" fill="none" stroke="#c8a15c" stroke-width="3.5"/>
+        <circle class="key-hole" cx="28" cy="28" r="6" fill="none" stroke="#c8a15c" stroke-width="2.5"/>
+        <!-- Key shaft -->
+        <line class="key-shaft" x1="40" y1="28" x2="70" y2="28" stroke="#c8a15c" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Key teeth -->
+        <line class="key-tooth-1" x1="55" y1="28" x2="55" y2="37" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+        <line class="key-tooth-2" x1="63" y1="28" x2="63" y2="34" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Preparing your stay&hellip;</p>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
 
 <a href="https://wa.me/<?php echo $settings['whatsapp_number']; ?>?text=<?php echo urlencode('Hi Quattro Homes, I have a question about booking a stay.'); ?>"
    target="_blank" class="whatsapp-float" aria-label="Chat with us on WhatsApp">
