@@ -1,32 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // ── Page loader ────────────────────────────────────────────────
-  const pageLoader = document.getElementById('page-loader');
-  if (pageLoader) {
-    // Minimum display time so the animation completes (feels intentional, not flash)
-    const minDisplay = 1800; // ms
+  (function() {
+    const pageLoader = document.getElementById('page-loader');
+    if (!pageLoader) return;
+
+    const minDisplay = 1600;
     const startTime  = Date.now();
 
     function hideLoader() {
       const elapsed = Date.now() - startTime;
       const delay   = Math.max(0, minDisplay - elapsed);
-      setTimeout(() => {
+      setTimeout(function() {
         pageLoader.classList.add('fade-out');
-        // Remove from DOM after transition
-        pageLoader.addEventListener('transitionend', () => {
-          pageLoader.remove();
-        }, { once: true });
+        setTimeout(function() { pageLoader.remove(); }, 600);
       }, delay);
     }
 
+    // Check all three ready states
     if (document.readyState === 'complete') {
+      // Already loaded — hide after min display time
       hideLoader();
+    } else if (document.readyState === 'interactive') {
+      // DOM ready but resources still loading
+      window.addEventListener('load', hideLoader, { once: true });
+      setTimeout(hideLoader, 3500); // hard fallback
     } else {
-      window.addEventListener('load', hideLoader);
-      // Safety fallback — never block the page more than 4s
-      setTimeout(hideLoader, 4000);
+      window.addEventListener('load', hideLoader, { once: true });
+      setTimeout(hideLoader, 3500); // hard fallback
     }
-  }
+  })();
 
 
   // ---------- Booking form + availability calendar (book.php only) ----------

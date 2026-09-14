@@ -1,3 +1,21 @@
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <div class="loader-mark">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <circle class="key-head" cx="28" cy="28" r="16" fill="none" stroke="#c8a15c" stroke-width="3.5"/>
+        <circle class="key-hole" cx="28" cy="28" r="6" fill="none" stroke="#c8a15c" stroke-width="2.5"/>
+        <line class="key-shaft" x1="40" y1="28" x2="70" y2="28" stroke="#c8a15c" stroke-width="3.5" stroke-linecap="round"/>
+        <line class="key-tooth-1" x1="55" y1="28" x2="55" y2="37" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+        <line class="key-tooth-2" x1="63" y1="28" x2="63" y2="34" stroke="#c8a15c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="loader-text">Preparing your stay&hellip;</p>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
+<!-- END PAGE LOADER -->
+
 <header class="site-header">
   <div class="nav-inner">
     <a href="index.php" class="brand">
