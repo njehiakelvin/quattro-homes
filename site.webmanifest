@@ -1,0 +1,20 @@
+{
+  "name": "Quattro Homes",
+  "short_name": "Quattro",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1c3626",
+  "background_color": "#1c3626",
+  "display": "standalone",
+  "start_url": "/"
+}

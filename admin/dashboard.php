@@ -4,117 +4,96 @@ require_once __DIR__ . '/../includes/settings.php';
 require_once __DIR__ . '/../includes/notify.php';
 require_admin_login();
 
-$pdo = getDB();
+$pdo      = getDB();
 $settings = getSettings();
+$currency = $settings['currency'] ?? 'KES';
 
-// Handle status update
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST['new_status'])) {
-    $allowed = ['pending', 'confirmed', 'cancelled'];
-    if (in_array($_POST['new_status'], $allowed, true)) {
-        $bookingId = (int)$_POST['booking_id'];
-        $stmt = $pdo->prepare("UPDATE bookings SET status = :status WHERE id = :id");
-        $stmt->execute([':status' => $_POST['new_status'], ':id' => $bookingId]);
+// ── AJAX status update (autosave) ─────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_action'])) {
+    header('Content-Type: application/json');
+    $id = (int)($_POST['booking_id'] ?? 0);
 
-        if (in_array($_POST['new_status'], ['confirmed', 'cancelled'], true)) {
-            $bStmt = $pdo->prepare("SELECT * FROM bookings WHERE id = :id");
-            $bStmt->execute([':id' => $bookingId]);
-            $bookingRow = $bStmt->fetch(PDO::FETCH_ASSOC);
-            if ($bookingRow) {
-                notify_booking_event($bookingRow, $_POST['new_status']);
-            }
+    if ($_POST['ajax_action'] === 'status') {
+        $allowed = ['pending','confirmed','cancelled'];
+        $status  = $_POST['new_status'] ?? '';
+        if (!in_array($status, $allowed, true) || !$id) {
+            echo json_encode(['success'=>false,'message'=>'Invalid.']); exit;
         }
-    }
-    header('Location: dashboard.php');
-    exit;
-}
-
-// Handle marking a stay as checked out
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout_booking_id'])) {
-    $checkoutId = (int)$_POST['checkout_booking_id'];
-    $stmt = $pdo->prepare("UPDATE bookings SET checked_out_at = NOW() WHERE id = :id AND status = 'confirmed'");
-    $stmt->execute([':id' => $checkoutId]);
-
-    $bStmt = $pdo->prepare("SELECT * FROM bookings WHERE id = :id");
-    $bStmt->execute([':id' => $checkoutId]);
-    $bookingRow = $bStmt->fetch(PDO::FETCH_ASSOC);
-    if ($bookingRow) {
-        notify_booking_event($bookingRow, 'checked_out');
+        $pdo->prepare("UPDATE bookings SET status=:s WHERE id=:id")
+            ->execute([':s'=>$status,':id'=>$id]);
+        $b = $pdo->prepare("SELECT * FROM bookings WHERE id=:id");
+        $b->execute([':id'=>$id]);
+        $row = $b->fetch(PDO::FETCH_ASSOC);
+        if ($row && in_array($status,['confirmed','cancelled'],true)) {
+            notify_booking_event($row, $status);
+        }
+        echo json_encode(['success'=>true,'message'=>'Status updated.']);
+        exit;
     }
 
-    header('Location: dashboard.php' . (isset($_GET['status']) ? '?status=' . urlencode($_GET['status']) : ''));
-    exit;
+    if ($_POST['ajax_action'] === 'checkout') {
+        $pdo->prepare("UPDATE bookings SET checked_out_at=NOW() WHERE id=:id AND status='confirmed'")
+            ->execute([':id'=>$id]);
+        $b = $pdo->prepare("SELECT * FROM bookings WHERE id=:id");
+        $b->execute([':id'=>$id]);
+        $row = $b->fetch(PDO::FETCH_ASSOC);
+        if ($row) notify_booking_event($row,'checked_out');
+        echo json_encode(['success'=>true,'message'=>'Checked out.']);
+        exit;
+    }
+
+    if ($_POST['ajax_action'] === 'delete') {
+        $pdo->prepare("DELETE FROM bookings WHERE id=:id")->execute([':id'=>$id]);
+        echo json_encode(['success'=>true,'message'=>'Deleted.']);
+        exit;
+    }
+
+    echo json_encode(['success'=>false,'message'=>'Unknown action.']); exit;
 }
 
-// Handle recording an external booking (Airbnb, Booking.com, walk-in, etc.) as occupied
+// ── Block external dates ───────────────────────────────────────────────────
 $blockError = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['block_dates'])) {
-    $blockFloor = in_array($_POST['block_floor'] ?? '', ['floor1', 'floor2', 'both'], true) ? $_POST['block_floor'] : 'floor2';
-    $blockCheckin = trim($_POST['block_checkin'] ?? '');
-    $blockCheckout = trim($_POST['block_checkout'] ?? '');
-    $blockSource = trim($_POST['block_source'] ?? '') ?: 'Other';
-    $blockGuestName = trim($_POST['block_guest_name'] ?? '');
-    $blockLabel = $blockGuestName !== '' ? "{$blockGuestName} ({$blockSource})" : "Booked via {$blockSource}";
-
-    $ci = DateTime::createFromFormat('Y-m-d', $blockCheckin);
-    $co = DateTime::createFromFormat('Y-m-d', $blockCheckout);
-
-    if (!$ci || !$co || $co <= $ci) {
-        $blockError = 'Please provide a valid check-in and check-out date, with check-out after check-in.';
+    $blockFloor    = in_array($_POST['block_floor']??'',['floor1','floor2','both'],true) ? $_POST['block_floor'] : 'floor2';
+    $blockCheckin  = trim($_POST['block_checkin']??'');
+    $blockCheckout = trim($_POST['block_checkout']??'');
+    $blockSource   = trim($_POST['block_source']??'')?:'Other';
+    $blockName     = trim($_POST['block_guest_name']??'');
+    $blockLabel    = $blockName ? "$blockName ($blockSource)" : "Booked via $blockSource";
+    $ci = DateTime::createFromFormat('Y-m-d',$blockCheckin);
+    $co = DateTime::createFromFormat('Y-m-d',$blockCheckout);
+    if (!$ci||!$co||$co<=$ci) {
+        $blockError = 'Invalid dates.';
     } else {
-        $floorCondition = $blockFloor === 'both'
-            ? "floor IN ('floor1', 'floor2', 'both')"
-            : "floor IN (:floor, 'both')";
-        $checkSql = "SELECT COUNT(*) FROM bookings WHERE status != 'cancelled' AND checkin_date < :checkout AND checkout_date > :checkin AND {$floorCondition}";
-        $checkStmt = $pdo->prepare($checkSql);
-        $checkParams = [':checkout' => $blockCheckout, ':checkin' => $blockCheckin];
-        if ($blockFloor !== 'both') $checkParams[':floor'] = $blockFloor;
-        $checkStmt->execute($checkParams);
-
-        if ($checkStmt->fetchColumn() > 0) {
-            $blockError = 'Those dates overlap an existing booking or block for this unit.';
+        $fc  = $blockFloor==='both' ? "floor IN ('floor1','floor2','both')" : "floor IN (:floor,'both')";
+        $chk = $pdo->prepare("SELECT COUNT(*) FROM bookings WHERE status!='cancelled' AND checkin_date<:co AND checkout_date>:ci AND $fc");
+        $cp  = [':co'=>$blockCheckout,':ci'=>$blockCheckin];
+        if ($blockFloor!=='both') $cp[':floor']=$blockFloor;
+        $chk->execute($cp);
+        if ($chk->fetchColumn()>0) {
+            $blockError = 'Dates overlap an existing booking.';
         } else {
-            $nights = (int)$ci->diff($co)->days;
-            $insert = $pdo->prepare(
-                "INSERT INTO bookings (full_name, email, phone, checkin_date, checkout_date, floor, nights, total_price, guests, purpose, message, status, is_blocked)
-                 VALUES (:name, '', '', :checkin, :checkout, :floor, :nights, NULL, 0, :source, :label, 'confirmed', 1)"
-            );
-            $insert->execute([
-                ':name' => $blockLabel,
-                ':checkin' => $blockCheckin,
-                ':checkout' => $blockCheckout,
-                ':floor' => $blockFloor,
-                ':nights' => $nights,
-                ':source' => $blockSource,
-                ':label' => $blockLabel,
-            ]);
-            header('Location: dashboard.php' . (isset($_GET['status']) ? '?status=' . urlencode($_GET['status']) : ''));
-            exit;
+            $nights=(int)$ci->diff($co)->days;
+            $pdo->prepare("INSERT INTO bookings (full_name,email,phone,checkin_date,checkout_date,floor,nights,total_price,guests,purpose,message,status,is_blocked)
+                           VALUES (:n,'','', :ci,:co,:f,:nights,NULL,0,:src,:lbl,'confirmed',1)")
+                ->execute([':n'=>$blockLabel,':ci'=>$blockCheckin,':co'=>$blockCheckout,':f'=>$blockFloor,':nights'=>$nights,':src'=>$blockSource,':lbl'=>$blockLabel]);
+            header('Location: dashboard.php'); exit;
         }
     }
-}
-
-// Handle deleting a booking entirely (permanent — used for blocks or mistaken entries)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_booking_id'])) {
-    $deleteId = (int)$_POST['delete_booking_id'];
-    $stmt = $pdo->prepare("DELETE FROM bookings WHERE id = :id");
-    $stmt->execute([':id' => $deleteId]);
-    header('Location: dashboard.php' . (isset($_GET['status']) ? '?status=' . urlencode($_GET['status']) : ''));
-    exit;
 }
 
 $filter = $_GET['status'] ?? 'all';
-$sql = "SELECT * FROM bookings";
+$sql    = "SELECT * FROM bookings";
 $params = [];
-if (in_array($filter, ['pending', 'confirmed', 'cancelled'], true)) {
-    $sql .= " WHERE status = :status";
+if (in_array($filter,['pending','confirmed','cancelled'],true)) {
+    $sql   .= " WHERE status=:status";
     $params[':status'] = $filter;
 }
 $sql .= " ORDER BY created_at DESC";
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
+$stmt = $pdo->prepare($sql); $stmt->execute($params);
 $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")->fetchAll(PDO::FETCH_KEY_PAIR);
+$counts   = $pdo->query("SELECT status,COUNT(*) c FROM bookings GROUP BY status")->fetchAll(PDO::FETCH_KEY_PAIR);
+$floorMap = ['floor1'=>'Floor 1','floor2'=>'Floor 2','both'=>'Both'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,10 +109,10 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
 <body class="admin-body">
 
 <header class="admin-header">
-  <div class="brand" style="color:var(--cream)">
+  <a href="dashboard.php" class="admin-brand">
     <div class="mark">Q</div>
-    <div class="name">Quattro Homes<small>Admin Dashboard</small></div>
-  </div>
+    <div class="name">Quattro Homes<small>Admin</small></div>
+  </a>
   <nav class="admin-nav">
     <a href="dashboard.php" class="active">Bookings</a>
     <a href="reviews.php">Reviews</a>
@@ -141,152 +120,195 @@ $counts = $pdo->query("SELECT status, COUNT(*) c FROM bookings GROUP BY status")
     <a href="referrals.php">Referrals</a>
     <a href="blog.php">Blog</a>
     <a href="settings.php">Settings</a>
-    <a href="logout.php">Log out</a>
+    <a href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
   </nav>
 </header>
 
-<div class="container" style="padding-top:36px;padding-bottom:60px;">
+<div class="admin-container">
 
+  <!-- Stats bar -->
   <div class="admin-stats">
-    <a href="?status=all" class="stat-card <?php echo $filter==='all'?'active':''; ?>">
-      <span class="stat-num"><?php echo array_sum($counts); ?></span><span>Total</span>
-    </a>
-    <a href="?status=pending" class="stat-card <?php echo $filter==='pending'?'active':''; ?>">
-      <span class="stat-num"><?php echo $counts['pending'] ?? 0; ?></span><span>Pending</span>
-    </a>
-    <a href="?status=confirmed" class="stat-card <?php echo $filter==='confirmed'?'active':''; ?>">
-      <span class="stat-num"><?php echo $counts['confirmed'] ?? 0; ?></span><span>Confirmed</span>
-    </a>
-    <a href="?status=cancelled" class="stat-card <?php echo $filter==='cancelled'?'active':''; ?>">
-      <span class="stat-num"><?php echo $counts['cancelled'] ?? 0; ?></span><span>Cancelled</span>
-    </a>
+    <a href="?status=all"       class="stat-card <?php echo $filter==='all'?'active':''; ?>"><span class="stat-num"><?php echo array_sum($counts); ?></span><span>All</span></a>
+    <a href="?status=pending"   class="stat-card stat-pending <?php echo $filter==='pending'?'active':''; ?>"><span class="stat-num"><?php echo $counts['pending']??0; ?></span><span>Pending</span></a>
+    <a href="?status=confirmed" class="stat-card stat-confirmed <?php echo $filter==='confirmed'?'active':''; ?>"><span class="stat-num"><?php echo $counts['confirmed']??0; ?></span><span>Confirmed</span></a>
+    <a href="?status=cancelled" class="stat-card stat-cancelled <?php echo $filter==='cancelled'?'active':''; ?>"><span class="stat-num"><?php echo $counts['cancelled']??0; ?></span><span>Cancelled</span></a>
   </div>
 
-  <div class="card settings-card">
-    <h3 style="margin-top:0;">Mark as Occupied (External Booking)</h3>
-    <p style="font-size:0.8rem;color:#999;margin:0 0 14px;">
-      Record a booking made outside our site (Airbnb, Booking.com, walk-in, phone booking, etc.)
-      so it correctly blocks these dates on the calendar and stops double-bookings.
-    </p>
-    <?php if ($blockError): ?>
-      <div id="form-feedback" class="error"><?php echo htmlspecialchars($blockError); ?></div>
-    <?php endif; ?>
-    <form method="post" class="settings-form">
-      <input type="hidden" name="block_dates" value="1">
-      <div class="form-row">
-        <div class="field">
-          <label for="block_floor">Unit</label>
-          <select id="block_floor" name="block_floor">
-            <option value="floor2">Floor 2</option>
-            <option value="floor1">Floor 1</option>
-            <option value="both">Both floors</option>
-          </select>
+  <!-- Block external dates (collapsed by default) -->
+  <details class="admin-card block-section">
+    <summary>Mark as Occupied <span class="summary-hint">— block dates for external bookings</span></summary>
+    <div class="block-form-body">
+      <?php if ($blockError): ?><div class="admin-alert error"><?php echo htmlspecialchars($blockError); ?></div><?php endif; ?>
+      <form method="post" class="settings-form">
+        <input type="hidden" name="block_dates" value="1">
+        <div class="form-row">
+          <div class="field">
+            <label>Unit</label>
+            <select name="block_floor">
+              <option value="floor2">Floor 2</option>
+              <option value="floor1">Floor 1</option>
+              <option value="both">Both floors</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Booked via</label>
+            <select name="block_source">
+              <option>Airbnb</option><option>Booking.com</option>
+              <option>Walk-in</option><option>Phone</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Guest name <span class="opt">(optional)</span></label>
+            <input type="text" name="block_guest_name" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="field">
+            <label>Check-in</label>
+            <input type="date" name="block_checkin" required>
+          </div>
+          <div class="field">
+            <label>Check-out</label>
+            <input type="date" name="block_checkout" required>
+          </div>
+          <div class="field field-btn">
+            <button type="submit" class="admin-btn">Block Dates</button>
+          </div>
         </div>
-        <div class="field">
-          <label for="block_source">Booked via</label>
-          <select id="block_source" name="block_source">
-            <option value="Airbnb">Airbnb</option>
-            <option value="Booking.com">Booking.com</option>
-            <option value="Walk-in">Walk-in</option>
-            <option value="Phone">Phone</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="block_guest_name">Guest name (optional)</label>
-          <input type="text" id="block_guest_name" name="block_guest_name" placeholder="e.g. Jane Doe" maxlength="120">
-        </div>
-        <div class="field"></div>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="block_checkin">Check-in</label>
-          <input type="date" id="block_checkin" name="block_checkin" required>
-        </div>
-        <div class="field">
-          <label for="block_checkout">Check-out</label>
-          <input type="date" id="block_checkout" name="block_checkout" required>
-        </div>
-      </div>
-      <button type="submit" class="submit-btn" style="width:auto;padding:12px 28px;">Mark as Occupied</button>
-    </form>
-    <p style="font-size:0.78rem;color:#999;margin-top:10px;">
-      This won't send any WhatsApp/email notifications, since there's no guest record from our site to notify.
-    </p>
-    </form>
-  </div>
+      </form>
+    </div>
+  </details>
 
-  <div class="card" style="padding:0;overflow-x:auto;">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>Guest</th><th>Contact</th><th>Floor</th><th>Dates</th><th>Nights</th><th>Guests</th><th>Purpose</th><th>Total</th><th>Status</th><th>Checkout</th><th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
+  <!-- Bookings table -->
+  <div class="admin-card table-card">
+    <div id="dash-toast" class="dash-toast" style="display:none;"></div>
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Guest</th>
+            <th>Contact</th>
+            <th>Unit</th>
+            <th>Dates</th>
+            <th>Nights</th>
+            <th>Guests</th>
+            <th>Purpose</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
         <?php if (!$bookings): ?>
-          <tr><td colspan="11" style="text-align:center;padding:30px;color:#999;">No bookings found.</td></tr>
+          <tr><td colspan="10" class="empty-row">No bookings found.</td></tr>
         <?php endif; ?>
-        <?php foreach ($bookings as $b): ?>
-          <tr<?php echo !empty($b['is_blocked']) ? ' style="background:#faf7f0;"' : ''; ?>>
-            <td data-label="Guest">
-              <?php echo htmlspecialchars($b['full_name']); ?>
-              <?php if (!empty($b['is_blocked'])): ?><br><span class="badge" style="background:#e5e0d8;color:#6b6357;">External</span><?php endif; ?>
+        <?php foreach ($bookings as $b):
+          $isBlocked = !empty($b['is_blocked']);
+          $bid       = (int)$b['id'];
+          $ref       = 'QH' . str_pad($bid, 4, '0', STR_PAD_LEFT);
+        ?>
+          <tr class="booking-row <?php echo $isBlocked?'row-blocked':''; ?>" data-id="<?php echo $bid; ?>" data-status="<?php echo htmlspecialchars($b['status']); ?>">
+            <td data-label="Ref">
+              <span class="booking-ref"><?php echo $ref; ?></span>
+              <span class="badge badge-<?php echo $b['status']; ?>"><?php echo ucfirst($b['status']); ?></span>
+              <?php if ($isBlocked): ?><span class="badge badge-blocked">External</span><?php endif; ?>
+              <?php if (!empty($b['checked_out_at'])): ?><span class="badge badge-confirmed" style="font-size:0.7rem;"><i class="fa-solid fa-circle-check"></i> Checked out</span><?php endif; ?>
             </td>
+            <td data-label="Guest"><?php echo htmlspecialchars($b['full_name']); ?></td>
             <td data-label="Contact">
-              <?php echo htmlspecialchars($b['phone']); ?><br>
-              <span style="color:#999;font-size:0.8rem;"><?php echo htmlspecialchars($b['email']); ?></span>
+              <?php if ($b['phone']): ?><a href="tel:<?php echo htmlspecialchars($b['phone']); ?>" class="contact-link"><i class="fa-solid fa-phone"></i> <?php echo htmlspecialchars($b['phone']); ?></a><?php endif; ?>
+              <?php if ($b['email']): ?><a href="mailto:<?php echo htmlspecialchars($b['email']); ?>" class="contact-link"><i class="fa-regular fa-envelope"></i> <?php echo htmlspecialchars($b['email']); ?></a><?php endif; ?>
             </td>
-            <td data-label="Floor"><?php
-              $bFloor = $b['floor'] ?? 'floor2';
-              echo ['floor1' => 'Floor 1', 'floor2' => 'Floor 2', 'both' => 'Both'][$bFloor] ?? htmlspecialchars($bFloor);
-            ?></td>
-            <td data-label="Dates"><?php echo htmlspecialchars($b['checkin_date']); ?> &rarr; <?php echo htmlspecialchars($b['checkout_date']); ?></td>
+            <td data-label="Unit"><?php echo $floorMap[$b['floor']] ?? htmlspecialchars($b['floor']); ?></td>
+            <td data-label="Dates" style="white-space:nowrap;"><?php echo htmlspecialchars($b['checkin_date']); ?><br><span style="color:#999;font-size:0.8rem;">&rarr; <?php echo htmlspecialchars($b['checkout_date']); ?></span></td>
             <td data-label="Nights"><?php echo (int)$b['nights']; ?></td>
             <td data-label="Guests"><?php echo (int)$b['guests']; ?></td>
-            <td data-label="Purpose"><?php echo htmlspecialchars($b['purpose']); ?></td>
-            <td data-label="Total"><?php echo $b['total_price'] !== null ? htmlspecialchars($settings['currency'] . ' ' . number_format($b['total_price'])) : '&mdash;'; ?></td>
-            <td data-label="Status"><span class="badge badge-<?php echo $b['status']; ?>"><?php echo ucfirst($b['status']); ?></span></td>
-            <td data-label="Checkout">
-              <?php if (!empty($b['is_blocked'])): ?>
-                <span style="color:#bbb;">&mdash;</span>
-              <?php elseif (!empty($b['checked_out_at'])): ?>
-                <span class="badge badge-confirmed"><i class="fa-solid fa-circle-check"></i> <?php echo htmlspecialchars(date('M j', strtotime($b['checked_out_at']))); ?></span>
-              <?php elseif ($b['status'] === 'confirmed'): ?>
-                <form method="post">
-                  <input type="hidden" name="checkout_booking_id" value="<?php echo (int)$b['id']; ?>">
-                  <button type="submit" class="mini-btn" title="Mark this stay as checked out">Mark Checked Out</button>
-                </form>
-              <?php else: ?>
-                <span style="color:#bbb;">&mdash;</span>
-              <?php endif; ?>
-            </td>
-            <td data-label="Action">
-              <?php if (empty($b['is_blocked'])): ?>
-              <form method="post" style="display:flex;gap:6px;margin-bottom:6px;">
-                <input type="hidden" name="booking_id" value="<?php echo (int)$b['id']; ?>">
-                <select name="new_status" class="mini-select">
-                  <option value="pending" <?php echo $b['status']==='pending'?'selected':''; ?>>Pending</option>
-                  <option value="confirmed" <?php echo $b['status']==='confirmed'?'selected':''; ?>>Confirmed</option>
-                  <option value="cancelled" <?php echo $b['status']==='cancelled'?'selected':''; ?>>Cancelled</option>
-                </select>
-                <button type="submit" class="mini-btn">Save</button>
-              </form>
-              <?php endif; ?>
-              <form method="post" onsubmit="return confirm('Delete this <?php echo !empty($b['is_blocked']) ? 'external booking record' : 'booking'; ?> permanently? This cannot be undone.');">
-                <input type="hidden" name="delete_booking_id" value="<?php echo (int)$b['id']; ?>">
-                <button type="submit" class="mini-btn" style="background:#a3382a;">Delete</button>
-              </form>
+            <td data-label="Purpose"><?php echo htmlspecialchars($b['purpose']??''); ?></td>
+            <td data-label="Total"><?php echo $b['total_price']!==null ? $currency.' '.number_format($b['total_price']) : '&mdash;'; ?></td>
+            <td data-label="Actions">
+              <div class="action-group">
+                <?php if (!$isBlocked): ?>
+                  <?php if ($b['status']==='pending'): ?>
+                    <button class="action-btn btn-confirm" data-action="status" data-status="confirmed" data-id="<?php echo $bid; ?>" title="Confirm booking">
+                      <i class="fa-solid fa-circle-check"></i> Confirm
+                    </button>
+                    <button class="action-btn btn-cancel" data-action="status" data-status="cancelled" data-id="<?php echo $bid; ?>" title="Cancel booking">
+                      <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                  <?php elseif ($b['status']==='confirmed'): ?>
+                    <?php if (empty($b['checked_out_at'])): ?>
+                    <button class="action-btn btn-checkout" data-action="checkout" data-id="<?php echo $bid; ?>" title="Mark as checked out">
+                      <i class="fa-solid fa-door-open"></i> Check Out
+                    </button>
+                    <?php endif; ?>
+                    <button class="action-btn btn-cancel" data-action="status" data-status="cancelled" data-id="<?php echo $bid; ?>" title="Cancel booking">
+                      <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                  <?php elseif ($b['status']==='cancelled'): ?>
+                    <button class="action-btn btn-confirm" data-action="status" data-status="confirmed" data-id="<?php echo $bid; ?>" title="Restore booking">
+                      <i class="fa-solid fa-rotate-left"></i> Restore
+                    </button>
+                  <?php endif; ?>
+                <?php endif; ?>
+                <button class="action-btn btn-delete" data-action="delete" data-id="<?php echo $bid; ?>" title="Delete permanently">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
             </td>
           </tr>
         <?php endforeach; ?>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
-<script src="admin.js"></script>
+
+<script>
+(function(){
+  const toast = document.getElementById('dash-toast');
+
+  function showToast(msg, ok) {
+    toast.textContent = msg;
+    toast.className = 'dash-toast ' + (ok ? 'toast-ok' : 'toast-err');
+    toast.style.display = 'block';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => { toast.style.display='none'; }, 3000);
+  }
+
+  function doAction(btn) {
+    const action = btn.dataset.action;
+    const id     = btn.dataset.id;
+    const status = btn.dataset.status || '';
+    const row    = document.querySelector(`.booking-row[data-id="${id}"]`);
+
+    if (action === 'delete') {
+      if (!confirm('Delete this booking permanently? This cannot be undone.')) return;
+    }
+
+    btn.disabled = true;
+    const body = new URLSearchParams({ ajax_action: action, booking_id: id, new_status: status });
+
+    fetch('dashboard.php', { method:'POST', body })
+      .then(r => r.json())
+      .then(data => {
+        if (!data.success) { showToast(data.message, false); btn.disabled=false; return; }
+        showToast(data.message, true);
+
+        if (action === 'delete') {
+          row.style.transition = 'opacity .3s';
+          row.style.opacity = '0';
+          setTimeout(() => row.remove(), 300);
+          return;
+        }
+        // Reload row state by refreshing page after short delay
+        setTimeout(() => location.reload(), 800);
+      })
+      .catch(() => { showToast('Request failed.', false); btn.disabled=false; });
+  }
+
+  document.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', () => doAction(btn));
+  });
+})();
+</script>
 </body>
 </html>

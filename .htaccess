@@ -5,10 +5,12 @@ php_flag display_errors Off
 php_flag log_errors On
 php_value error_log logs/php_errors.log
 
-# Force HTTPS (uncomment when SSL cert is installed)
-# RewriteEngine On
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Remove www (uncomment to enforce non-www)
 # RewriteEngine On
