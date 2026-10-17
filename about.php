@@ -100,7 +100,7 @@ $activePage      = 'about';
     <div class="floors-grid">
       <div class="floor-card">
         <div class="floor-img">
-          <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 living room" loading="lazy">
+          <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 living room" loading="lazy" decoding="async">
           <span class="floor-badge">Floor 1</span>
         </div>
         <div class="floor-body">
@@ -114,7 +114,7 @@ $activePage      = 'about';
       </div>
       <div class="floor-card">
         <div class="floor-img">
-          <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 bedroom 2" loading="lazy">
+          <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 bedroom 2" loading="lazy" decoding="async">
           <span class="floor-badge">Floor 2</span>
         </div>
         <div class="floor-body">
@@ -153,7 +153,7 @@ $activePage      = 'about';
         <iframe
           src="https://www.google.com/maps?q=HHM6+XQ9,+Bungoma&output=embed"
           width="100%" height="340" style="border:0;border-radius:var(--radius-lg);display:block;"
-          allowfullscreen="" loading="lazy"
+          allowfullscreen="" loading="lazy" decoding="async"
           referrerpolicy="no-referrer-when-downgrade" title="Quattro Homes map"></iframe>
       </div>
     </div>

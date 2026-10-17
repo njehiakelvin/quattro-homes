@@ -670,4 +670,41 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
+
+  // ── Lazy loading ─────────────────────────────────────────────────
+  // Native lazy loading is supported in all modern browsers.
+  // This polyfill catches any dynamically added images and ensures
+  // images without loading="lazy" still get deferred where appropriate.
+  (function() {
+    // Set loading=lazy on any img missing it (except above-fold markers)
+    document.querySelectorAll('img:not([loading])').forEach(function(img) {
+      // Skip if it has eager marker or is a lightbox image
+      if (img.id === 'lb-img' || img.classList.contains('eager')) return;
+      img.setAttribute('loading', 'lazy');
+      img.setAttribute('decoding', 'async');
+    });
+
+    // IntersectionObserver for browsers that need it (very old Safari)
+    if ('loading' in HTMLImageElement.prototype) return; // native support
+    if (!('IntersectionObserver' in window)) return;     // too old, skip
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          delete img.dataset.src;
+        }
+        img.classList.remove('lazy-pending');
+        observer.unobserve(img);
+      });
+    }, { rootMargin: '200px 0px' });
+
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+      observer.observe(img);
+    });
+  })();
+
+
 });

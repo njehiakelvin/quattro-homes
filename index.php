@@ -107,15 +107,15 @@ $activePage      = 'home';
       <span class="mosaic-label">Floor 2 · Bedroom 2</span>
     </a>
     <a href="gallery.php" class="mosaic-item">
-      <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 kitchen" loading="lazy">
+      <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 kitchen" loading="lazy" decoding="async">
       <span class="mosaic-label">Floor 2 · Kitchen</span>
     </a>
     <a href="gallery.php" class="mosaic-item">
-      <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 bedroom with baby cot" loading="lazy">
+      <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 bedroom with baby cot" loading="lazy" decoding="async">
       <span class="mosaic-label">Floor 2 · Bedroom with Baby Cot</span>
     </a>
     <a href="gallery.php" class="mosaic-item">
-      <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 living room" loading="lazy">
+      <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 living room" loading="lazy" decoding="async">
       <span class="mosaic-label">Floor 1 · Living Room</span>
     </a>
   </div>
@@ -155,7 +155,7 @@ $activePage      = 'home';
     <div class="floors-grid">
       <div class="floor-card">
         <div class="floor-img">
-          <img src="images/floor1/IMG_5926.jpg" alt="Floor 1" loading="lazy">
+          <img src="images/floor1/IMG_5926.jpg" alt="Floor 1" loading="lazy" decoding="async">
           <span class="floor-badge">Floor 1</span>
         </div>
         <div class="floor-body">
@@ -166,7 +166,7 @@ $activePage      = 'home';
       </div>
       <div class="floor-card">
         <div class="floor-img">
-          <img src="images/floor2/IMG_5843.jpg" alt="Floor 2" loading="lazy">
+          <img src="images/floor2/IMG_5843.jpg" alt="Floor 2" loading="lazy" decoding="async">
           <span class="floor-badge">Floor 2</span>
         </div>
         <div class="floor-body">

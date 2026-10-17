@@ -149,43 +149,43 @@ $allImages = [
     <div class="gallery-room-label">Living Room</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="0" data-tab="floor2">
-        <img src="images/floor2/IMG_5843.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5843.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="1" data-tab="floor2">
-        <img src="images/floor2/IMG_5844.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5844.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="2" data-tab="floor2">
-        <img src="images/floor2/IMG_5845.jpg" alt="Floor 2 · Living & Dining Area" loading="lazy">
+        <img src="images/floor2/IMG_5845.jpg" alt="Floor 2 · Living & Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living & Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="3" data-tab="floor2">
-        <img src="images/floor2/IMG_5848.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5848.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="4" data-tab="floor2">
-        <img src="images/floor2/IMG_5849.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5849.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="5" data-tab="floor2">
-        <img src="images/floor2/IMG_5851.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5851.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="6" data-tab="floor2">
-        <img src="images/floor2/IMG_5854.jpg" alt="Floor 2 · Living Area" loading="lazy">
+        <img src="images/floor2/IMG_5854.jpg" alt="Floor 2 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="7" data-tab="floor2">
-        <img src="images/floor2/IMG_5855.jpg" alt="Floor 2 · Living Area" loading="lazy">
+        <img src="images/floor2/IMG_5855.jpg" alt="Floor 2 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="8" data-tab="floor2">
-        <img src="images/floor2/IMG_5856.jpg" alt="Floor 2 · Dining Area" loading="lazy">
+        <img src="images/floor2/IMG_5856.jpg" alt="Floor 2 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="9" data-tab="floor2">
-        <img src="images/floor2/IMG_5860.jpg" alt="Floor 2 · TV Area" loading="lazy">
+        <img src="images/floor2/IMG_5860.jpg" alt="Floor 2 · TV Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · TV Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -194,19 +194,19 @@ $allImages = [
     <div class="gallery-room-label">Bedroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="10" data-tab="floor2">
-        <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 · Bedroom with Baby Cot" loading="lazy">
+        <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 · Bedroom with Baby Cot" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom with Baby Cot</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="11" data-tab="floor2">
-        <img src="images/floor2/IMG_5880.jpg" alt="Floor 2 · Bedroom with Cot" loading="lazy">
+        <img src="images/floor2/IMG_5880.jpg" alt="Floor 2 · Bedroom with Cot" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom with Cot</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="12" data-tab="floor2">
-        <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 · Bedroom 2" loading="lazy">
+        <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 · Bedroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="13" data-tab="floor2">
-        <img src="images/floor2/IMG_5885.jpg" alt="Floor 2 · Bedroom 2" loading="lazy">
+        <img src="images/floor2/IMG_5885.jpg" alt="Floor 2 · Bedroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -215,11 +215,11 @@ $allImages = [
     <div class="gallery-room-label">Kitchen</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="14" data-tab="floor2">
-        <img src="images/floor2/IMG_5888.jpg" alt="Floor 2 · Kitchen" loading="lazy">
+        <img src="images/floor2/IMG_5888.jpg" alt="Floor 2 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="15" data-tab="floor2">
-        <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 · Kitchen" loading="lazy">
+        <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -228,11 +228,11 @@ $allImages = [
     <div class="gallery-room-label">Bathroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="16" data-tab="floor2">
-        <img src="images/floor2/IMG_5870.jpg" alt="Floor 2 · Bathroom & Shower" loading="lazy">
+        <img src="images/floor2/IMG_5870.jpg" alt="Floor 2 · Bathroom & Shower" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bathroom & Shower</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="17" data-tab="floor2">
-        <img src="images/floor2/IMG_5873.jpg" alt="Floor 2 · Bathroom" loading="lazy">
+        <img src="images/floor2/IMG_5873.jpg" alt="Floor 2 · Bathroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bathroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -241,27 +241,27 @@ $allImages = [
     <div class="gallery-room-label">Balcony</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="18" data-tab="floor2">
-        <img src="images/floor2/IMG_5862.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5862.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="19" data-tab="floor2">
-        <img src="images/floor2/IMG_5864.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5864.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="20" data-tab="floor2">
-        <img src="images/floor2/IMG_5866.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5866.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="21" data-tab="floor2">
-        <img src="images/floor2/IMG_5868.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5868.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="22" data-tab="floor2">
-        <img src="images/floor2/IMG_5895.jpg" alt="Floor 2 · Front Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5895.jpg" alt="Floor 2 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="23" data-tab="floor2">
-        <img src="images/floor2/IMG_5896.jpg" alt="Floor 2 · Front Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5896.jpg" alt="Floor 2 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -273,23 +273,23 @@ $allImages = [
     <div class="gallery-room-label">Living Room</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="0" data-tab="floor1">
-        <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="1" data-tab="floor1">
-        <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="2" data-tab="floor1">
-        <img src="images/floor1/IMG_5928.jpg" alt="Floor 1 · Living Area" loading="lazy">
+        <img src="images/floor1/IMG_5928.jpg" alt="Floor 1 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="3" data-tab="floor1">
-        <img src="images/floor1/IMG_5957.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5957.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="4" data-tab="floor1">
-        <img src="images/floor1/IMG_7778.jpg" alt="Floor 1 · Living Area" loading="lazy">
+        <img src="images/floor1/IMG_7778.jpg" alt="Floor 1 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -298,19 +298,19 @@ $allImages = [
     <div class="gallery-room-label">Bedroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="5" data-tab="floor1">
-        <img src="images/floor1/IMG_5910.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5910.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="6" data-tab="floor1">
-        <img src="images/floor1/IMG_5912.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5912.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="7" data-tab="floor1">
-        <img src="images/floor1/IMG_5918.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5918.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="8" data-tab="floor1">
-        <img src="images/floor1/IMG_5922.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5922.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -319,15 +319,15 @@ $allImages = [
     <div class="gallery-room-label">Dining & TV</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="9" data-tab="floor1">
-        <img src="images/floor1/IMG_5934.jpg" alt="Floor 1 · Dining & TV Area" loading="lazy">
+        <img src="images/floor1/IMG_5934.jpg" alt="Floor 1 · Dining & TV Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining & TV Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="10" data-tab="floor1">
-        <img src="images/floor1/IMG_5937.jpg" alt="Floor 1 · Dining Area" loading="lazy">
+        <img src="images/floor1/IMG_5937.jpg" alt="Floor 1 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="11" data-tab="floor1">
-        <img src="images/floor1/IMG_5939.jpg" alt="Floor 1 · Dining Area" loading="lazy">
+        <img src="images/floor1/IMG_5939.jpg" alt="Floor 1 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -336,7 +336,7 @@ $allImages = [
     <div class="gallery-room-label">Kitchen</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="12" data-tab="floor1">
-        <img src="images/floor1/IMG_7797.jpg" alt="Floor 1 · Kitchen" loading="lazy">
+        <img src="images/floor1/IMG_7797.jpg" alt="Floor 1 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -345,11 +345,11 @@ $allImages = [
     <div class="gallery-room-label">Bathroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="13" data-tab="floor1">
-        <img src="images/floor1/IMG_7820.jpg" alt="Floor 1 · Bathroom with Bathtub" loading="lazy">
+        <img src="images/floor1/IMG_7820.jpg" alt="Floor 1 · Bathroom with Bathtub" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bathroom with Bathtub</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="14" data-tab="floor1">
-        <img src="images/floor1/IMG_7826.jpg" alt="Floor 1 · Bathroom 2" loading="lazy">
+        <img src="images/floor1/IMG_7826.jpg" alt="Floor 1 · Bathroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bathroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -358,27 +358,27 @@ $allImages = [
     <div class="gallery-room-label">Balcony</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="15" data-tab="floor1">
-        <img src="images/floor1/IMG_5940.jpg" alt="Floor 1 · Decor & Garden" loading="lazy">
+        <img src="images/floor1/IMG_5940.jpg" alt="Floor 1 · Decor & Garden" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Decor & Garden</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="16" data-tab="floor1">
-        <img src="images/floor1/IMG_5941.jpg" alt="Floor 1 · Back Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5941.jpg" alt="Floor 1 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="17" data-tab="floor1">
-        <img src="images/floor1/IMG_5942.jpg" alt="Floor 1 · Back Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5942.jpg" alt="Floor 1 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="18" data-tab="floor1">
-        <img src="images/floor1/IMG_5951.jpg" alt="Floor 1 · Balcony & Garden" loading="lazy">
+        <img src="images/floor1/IMG_5951.jpg" alt="Floor 1 · Balcony & Garden" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Balcony & Garden</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="19" data-tab="floor1">
-        <img src="images/floor1/IMG_5961.jpg" alt="Floor 1 · Front Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5961.jpg" alt="Floor 1 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="20" data-tab="floor1">
-        <img src="images/floor1/IMG_5964.jpg" alt="Floor 1 · Front Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5964.jpg" alt="Floor 1 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -390,63 +390,63 @@ $allImages = [
     <div class="gallery-room-label">Living Room</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="0" data-tab="all">
-        <img src="images/floor2/IMG_5843.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5843.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="1" data-tab="all">
-        <img src="images/floor2/IMG_5844.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5844.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="2" data-tab="all">
-        <img src="images/floor2/IMG_5845.jpg" alt="Floor 2 · Living & Dining Area" loading="lazy">
+        <img src="images/floor2/IMG_5845.jpg" alt="Floor 2 · Living & Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living & Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="3" data-tab="all">
-        <img src="images/floor2/IMG_5848.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5848.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="4" data-tab="all">
-        <img src="images/floor2/IMG_5849.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5849.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="5" data-tab="all">
-        <img src="images/floor2/IMG_5851.jpg" alt="Floor 2 · Living Room" loading="lazy">
+        <img src="images/floor2/IMG_5851.jpg" alt="Floor 2 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="6" data-tab="all">
-        <img src="images/floor2/IMG_5854.jpg" alt="Floor 2 · Living Area" loading="lazy">
+        <img src="images/floor2/IMG_5854.jpg" alt="Floor 2 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="7" data-tab="all">
-        <img src="images/floor2/IMG_5855.jpg" alt="Floor 2 · Living Area" loading="lazy">
+        <img src="images/floor2/IMG_5855.jpg" alt="Floor 2 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="8" data-tab="all">
-        <img src="images/floor2/IMG_5856.jpg" alt="Floor 2 · Dining Area" loading="lazy">
+        <img src="images/floor2/IMG_5856.jpg" alt="Floor 2 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="9" data-tab="all">
-        <img src="images/floor2/IMG_5860.jpg" alt="Floor 2 · TV Area" loading="lazy">
+        <img src="images/floor2/IMG_5860.jpg" alt="Floor 2 · TV Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · TV Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="24" data-tab="all">
-        <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5923.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="25" data-tab="all">
-        <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5926.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="26" data-tab="all">
-        <img src="images/floor1/IMG_5928.jpg" alt="Floor 1 · Living Area" loading="lazy">
+        <img src="images/floor1/IMG_5928.jpg" alt="Floor 1 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="27" data-tab="all">
-        <img src="images/floor1/IMG_5957.jpg" alt="Floor 1 · Living Room" loading="lazy">
+        <img src="images/floor1/IMG_5957.jpg" alt="Floor 1 · Living Room" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Room</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="28" data-tab="all">
-        <img src="images/floor1/IMG_7778.jpg" alt="Floor 1 · Living Area" loading="lazy">
+        <img src="images/floor1/IMG_7778.jpg" alt="Floor 1 · Living Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Living Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -455,35 +455,35 @@ $allImages = [
     <div class="gallery-room-label">Bedroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="10" data-tab="all">
-        <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 · Bedroom with Baby Cot" loading="lazy">
+        <img src="images/floor2/IMG_5878.jpg" alt="Floor 2 · Bedroom with Baby Cot" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom with Baby Cot</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="11" data-tab="all">
-        <img src="images/floor2/IMG_5880.jpg" alt="Floor 2 · Bedroom with Cot" loading="lazy">
+        <img src="images/floor2/IMG_5880.jpg" alt="Floor 2 · Bedroom with Cot" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom with Cot</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="12" data-tab="all">
-        <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 · Bedroom 2" loading="lazy">
+        <img src="images/floor2/IMG_5883.jpg" alt="Floor 2 · Bedroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="13" data-tab="all">
-        <img src="images/floor2/IMG_5885.jpg" alt="Floor 2 · Bedroom 2" loading="lazy">
+        <img src="images/floor2/IMG_5885.jpg" alt="Floor 2 · Bedroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bedroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="29" data-tab="all">
-        <img src="images/floor1/IMG_5910.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5910.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="30" data-tab="all">
-        <img src="images/floor1/IMG_5912.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5912.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="31" data-tab="all">
-        <img src="images/floor1/IMG_5918.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5918.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="32" data-tab="all">
-        <img src="images/floor1/IMG_5922.jpg" alt="Floor 1 · Bedroom" loading="lazy">
+        <img src="images/floor1/IMG_5922.jpg" alt="Floor 1 · Bedroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bedroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -492,15 +492,15 @@ $allImages = [
     <div class="gallery-room-label">Kitchen</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="14" data-tab="all">
-        <img src="images/floor2/IMG_5888.jpg" alt="Floor 2 · Kitchen" loading="lazy">
+        <img src="images/floor2/IMG_5888.jpg" alt="Floor 2 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="15" data-tab="all">
-        <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 · Kitchen" loading="lazy">
+        <img src="images/floor2/IMG_5893.jpg" alt="Floor 2 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="36" data-tab="all">
-        <img src="images/floor1/IMG_7797.jpg" alt="Floor 1 · Kitchen" loading="lazy">
+        <img src="images/floor1/IMG_7797.jpg" alt="Floor 1 · Kitchen" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Kitchen</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -509,19 +509,19 @@ $allImages = [
     <div class="gallery-room-label">Bathroom</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="16" data-tab="all">
-        <img src="images/floor2/IMG_5870.jpg" alt="Floor 2 · Bathroom & Shower" loading="lazy">
+        <img src="images/floor2/IMG_5870.jpg" alt="Floor 2 · Bathroom & Shower" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bathroom & Shower</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="17" data-tab="all">
-        <img src="images/floor2/IMG_5873.jpg" alt="Floor 2 · Bathroom" loading="lazy">
+        <img src="images/floor2/IMG_5873.jpg" alt="Floor 2 · Bathroom" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Bathroom</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="37" data-tab="all">
-        <img src="images/floor1/IMG_7820.jpg" alt="Floor 1 · Bathroom with Bathtub" loading="lazy">
+        <img src="images/floor1/IMG_7820.jpg" alt="Floor 1 · Bathroom with Bathtub" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bathroom with Bathtub</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="38" data-tab="all">
-        <img src="images/floor1/IMG_7826.jpg" alt="Floor 1 · Bathroom 2" loading="lazy">
+        <img src="images/floor1/IMG_7826.jpg" alt="Floor 1 · Bathroom 2" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Bathroom 2</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -530,51 +530,51 @@ $allImages = [
     <div class="gallery-room-label">Balcony</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="18" data-tab="all">
-        <img src="images/floor2/IMG_5862.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5862.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="19" data-tab="all">
-        <img src="images/floor2/IMG_5864.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5864.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="20" data-tab="all">
-        <img src="images/floor2/IMG_5866.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5866.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="21" data-tab="all">
-        <img src="images/floor2/IMG_5868.jpg" alt="Floor 2 · Back Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5868.jpg" alt="Floor 2 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="22" data-tab="all">
-        <img src="images/floor2/IMG_5895.jpg" alt="Floor 2 · Front Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5895.jpg" alt="Floor 2 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="23" data-tab="all">
-        <img src="images/floor2/IMG_5896.jpg" alt="Floor 2 · Front Balcony" loading="lazy">
+        <img src="images/floor2/IMG_5896.jpg" alt="Floor 2 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 2 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="39" data-tab="all">
-        <img src="images/floor1/IMG_5940.jpg" alt="Floor 1 · Decor & Garden" loading="lazy">
+        <img src="images/floor1/IMG_5940.jpg" alt="Floor 1 · Decor & Garden" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Decor & Garden</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="40" data-tab="all">
-        <img src="images/floor1/IMG_5941.jpg" alt="Floor 1 · Back Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5941.jpg" alt="Floor 1 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="41" data-tab="all">
-        <img src="images/floor1/IMG_5942.jpg" alt="Floor 1 · Back Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5942.jpg" alt="Floor 1 · Back Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Back Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="42" data-tab="all">
-        <img src="images/floor1/IMG_5951.jpg" alt="Floor 1 · Balcony & Garden" loading="lazy">
+        <img src="images/floor1/IMG_5951.jpg" alt="Floor 1 · Balcony & Garden" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Balcony & Garden</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="43" data-tab="all">
-        <img src="images/floor1/IMG_5961.jpg" alt="Floor 1 · Front Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5961.jpg" alt="Floor 1 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="44" data-tab="all">
-        <img src="images/floor1/IMG_5964.jpg" alt="Floor 1 · Front Balcony" loading="lazy">
+        <img src="images/floor1/IMG_5964.jpg" alt="Floor 1 · Front Balcony" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Front Balcony</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>
@@ -583,15 +583,15 @@ $allImages = [
     <div class="gallery-room-label">Dining & TV</div>
     <div class="gallery-grid">
       <div class="gallery-item" data-index="33" data-tab="all">
-        <img src="images/floor1/IMG_5934.jpg" alt="Floor 1 · Dining & TV Area" loading="lazy">
+        <img src="images/floor1/IMG_5934.jpg" alt="Floor 1 · Dining & TV Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining & TV Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="34" data-tab="all">
-        <img src="images/floor1/IMG_5937.jpg" alt="Floor 1 · Dining Area" loading="lazy">
+        <img src="images/floor1/IMG_5937.jpg" alt="Floor 1 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
       <div class="gallery-item" data-index="35" data-tab="all">
-        <img src="images/floor1/IMG_5939.jpg" alt="Floor 1 · Dining Area" loading="lazy">
+        <img src="images/floor1/IMG_5939.jpg" alt="Floor 1 · Dining Area" loading="lazy" decoding="async">
         <div class="gallery-overlay"><span class="gallery-label">Floor 1 · Dining Area</span><span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span></div>
       </div>
     </div>

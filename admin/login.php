@@ -24,8 +24,13 @@ if (admin_logged_in()) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Login | Quattro Homes</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="../css/style.css?v=<?php echo $_siteCssVer; ?>">
+<link rel="stylesheet" href="admin.css?v=<?php echo $_adminCssVer; ?>">
+<?php
+$_adminCssVer = file_exists(__DIR__.'/admin.css')   ? substr(md5(filemtime(__DIR__.'/admin.css')),0,8)     : '1';
+$_siteCssVer  = file_exists(__DIR__.'/../css/style.css') ? substr(md5(filemtime(__DIR__.'/../css/style.css')),0,8) : '1';
+$_siteJsVer   = file_exists(__DIR__.'/../js/script.js')  ? substr(md5(filemtime(__DIR__.'/../js/script.js')),0,8)  : '1';
+?>
 </head>
 <body class="admin-body">
   <div class="admin-login-wrap">

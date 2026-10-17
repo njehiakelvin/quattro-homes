@@ -40,9 +40,9 @@ $activePage = 'blog';
         <?php foreach ($posts as $p): ?>
           <a class="blog-card" href="blog-post.php?slug=<?php echo urlencode($p['slug']); ?>">
             <?php if (!empty($p['cover_image'])): ?>
-              <img src="<?php echo htmlspecialchars($p['cover_image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy">
+              <img src="<?php echo htmlspecialchars($p['cover_image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy" decoding="async">
             <?php else: ?>
-              <img src="images/floor2/IMG_5856.jpg" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy">
+              <img src="images/floor2/IMG_5856.jpg" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy" decoding="async">
             <?php endif; ?>
             <div class="blog-card-body">
               <span class="blog-date"><?php echo htmlspecialchars(date('M j, Y', strtotime($p['created_at']))); ?></span>

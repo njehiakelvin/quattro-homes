@@ -70,7 +70,7 @@ $activePage = 'blog';
         <p class="eyebrow"><?php echo htmlspecialchars(date('F j, Y', strtotime($post['created_at']))); ?></p>
         <h1><?php echo htmlspecialchars($post['title']); ?></h1>
         <?php if (!empty($post['cover_image'])): ?>
-          <img class="blog-article-cover" src="<?php echo htmlspecialchars($post['cover_image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
+          <img class="blog-article-cover" src="<?php echo htmlspecialchars($post['cover_image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" loading="eager" decoding="async">
         <?php endif; ?>
         <div class="blog-article-body">
           <?php echo $post['content']; ?>

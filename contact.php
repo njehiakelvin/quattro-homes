@@ -82,7 +82,7 @@ $activePage      = 'contact';
 <section style="padding:0;">
   <iframe
     src="https://www.google.com/maps?q=<?php echo urlencode($mapQuery); ?>&output=embed"
-    width="100%" height="380" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+    width="100%" height="380" style="border:0;display:block;" allowfullscreen="" loading="lazy" decoding="async"
     referrerpolicy="no-referrer-when-downgrade" title="Quattro Homes location"></iframe>
 </section>
 
